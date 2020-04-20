@@ -1,6 +1,7 @@
 package deepreuse.memory
 
 import Chisel._
+import chisel3.experimental.dontTouch
 
 import freechips.rocketchip.config.Parameters
 import freechips.rocketchip.tilelink._
@@ -36,6 +37,8 @@ class IDCacheModule(outer: IDCache) extends LazyModuleImp(outer) with IDCachePar
 
   implicit val edge = outer.node.edges.out(0)
   val (tl_out, _) = outer.node.out(0)
+
+  dontTouch(tl_out.e)
 
   val wb = Module(new IDCacheWritebackUnit)
   val mshrs = Module(new IDCacheMSHRFile)  
@@ -153,7 +156,8 @@ class IDCacheModule(outer: IDCache) extends LazyModuleImp(outer) with IDCachePar
   // calculate centroid
   val s2_row_data = Wire(Bits(width=rowBits))
   val s2_mask = UIntToOH(s2_req.addr.extract(rowOffBits-1, offsetlsb))
-  val s2_data_vectored = Vec.tabulate(rowWords) { i => s2_row_data(wordBits*(i+1)-1, wordBits*i) }
+  val s2_data_vectored = Wire(Vec(rowWords, Bits(width=wordBits)))
+  s2_data_vectored := Vec.tabulate(rowWords) { i => s2_row_data(wordBits*(i+1)-1, wordBits*i) }
   val s2_wdata = s2_data_vectored.zipWithIndex.map { 
     case (rdata, index) => Mux[UInt](isWrite(s2_req.cmd) && s2_mask(index), s2_req.data, rdata) 
   }.asUInt
@@ -259,15 +263,7 @@ class IDCacheModule(outer: IDCache) extends LazyModuleImp(outer) with IDCachePar
   s2_nack := s2_nack_hit || s2_nack_victim || s2_nack_miss
   s2_valid_masked := s2_valid && !s2_nack
 
-  // after a nack, block until nack condition resolves to save energy
-  val block_miss = Reg(init=Bool(false))
-  block_miss := (s2_valid || block_miss) && s2_nack_miss
-  when (block_miss || s1_nack) {
-    io.req.ready := Bool(false)
-    nackfifo.io.deq.ready := Bool(false)
-  }
-
-  // load data or bypass
+ // load data or bypass
   s2_row_data := Mux(s2_store_bypass, s2_store_bypass_row, s2_data_muxed)
   val cache_resp_data = s2_row_data >> Cat(s2_mask, Bits(0, log2Up(wordBits)))
   io.resp.bits.hashID := cache_resp_data(maxHashSize-1, 0)
@@ -279,11 +275,53 @@ class IDCacheModule(outer: IDCache) extends LazyModuleImp(outer) with IDCachePar
     }
   }
 
+  // after a nack, block until nack condition resolves to save energy
+  val block_miss = Reg(init=Bool(false))
+  block_miss := (s2_valid || block_miss) && s2_nack_miss
+  when (block_miss || s1_nack) {
+    if(DEBUG_PRINTF_CACHE){ printf("IC block miss -> s1_nack: %d block_miss: %d s2_nack_miss: %d s2_valid: %d\n", s1_nack, block_miss, s2_nack_miss, s2_valid) }
+    io.req.ready := Bool(false)
+    nackfifo.io.deq.ready := Bool(false)
+  }
+
+
+
+  assert(!nackfifo.io.enq.valid || nackfifo.io.enq.ready, "nackfifo overflow\n")
+
+  val nMiss = Reg(init=UInt(0,64))
+  when(mshrs.io.req.fire()){
+    nMiss := nMiss + UInt(1,64)
+    printf("ID-nMiss: 0x%x\n", nMiss)
+  }
+
+  val nReqs = Reg(init=UInt(0,64))
+  when(io.req.fire()){
+    nReqs := nReqs + UInt(1,64)
+    printf("ID-nReqs: 0x%x\n", nReqs)
+  }
+
   // write to nack fifo
   nackfifo.io.enq.valid := s2_valid && s2_nack
   nackfifo.io.enq.bits := s2_req
   nackfifo.io.enq.bits.data := cache_resp_data(maxHashSize-1, 0)
 
-  assert(!nackfifo.io.enq.valid || nackfifo.io.enq.ready, "nackfifo overflow\n")
+  if(DEBUG_PRINTF_CACHE){
+    when(tl_out.a.fire()){
+      printf("IC tl_out_a_address: 0x%x tl_out_a_data: 0x%x tl_out_a_size: 0x%x tl_out_a_source: 0x%x\n",
+              tl_out.a.bits.address, tl_out.a.bits.data, tl_out.a.bits.size, tl_out.a.bits.source)
+    }
+    when(tl_out.c.fire()){
+      printf("IC tl_out_c_address: 0x%x tl_out_c_data: 0x%x tl_out_c_size: 0x%x tl_out_c_source: 0x%x\n",
+              tl_out.c.bits.address, tl_out.c.bits.data, tl_out.c.bits.size, tl_out.c.bits.source)
+    }
+    when(tl_out.d.fire()){
+      printf("IC tl_out_d_data: 0x%x tl_out_d_size: 0x%x tl_out_d_source: 0x%x\n",
+              tl_out.d.bits.data, tl_out.d.bits.size, tl_out.d.bits.source)
+    }   
+    when(tl_out.e.fire()){
+      printf("IC tl_out_e_sink: 0x%x\n",
+              tl_out.e.bits.sink)
+    }     
+  }
 
 }

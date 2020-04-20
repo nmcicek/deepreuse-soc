@@ -98,7 +98,8 @@ class ClusterCacheModule(outer: ClusterCache) extends LazyModuleImp(outer) with 
   }
   when(nackfifo.io.deq.fire()) {
     s1_req := nackfifo.io.deq.bits
-    if(DEBUG_PRINTF_CACHE) printf("ClusterCache NackFifo Deq Fired!\n")
+    s1_valid := true.B
+    if(DEBUG_PRINTF_CACHE) printf("IDCache NackFifo Deq Fired!\n")
   }
 
   when (s1_clk_en) {
@@ -297,12 +298,26 @@ class ClusterCacheModule(outer: ClusterCache) extends LazyModuleImp(outer) with 
     nackfifo.io.deq.ready := Bool(false)
   }
 
+
+
+  assert(!nackfifo.io.enq.valid || nackfifo.io.enq.ready, "nackfifo overflow\n")
+
+  val nMiss = Reg(init=UInt(0,64))
+  when(mshrs.io.req.fire()){
+    nMiss := nMiss + UInt(1,64)
+    printf("CC-nMiss: 0x%x\n", nMiss)
+  }
+
+  val nReqs = Reg(init=UInt(0,64))
+  when(io.req.fire()){
+    nReqs := nReqs + UInt(1,64)
+    printf("CC-nReqs: 0x%x\n", nReqs)
+  }
+
   // write to nack fifo
   nackfifo.io.enq.valid := s2_valid && s2_nack
   nackfifo.io.enq.bits := s2_req
   nackfifo.io.enq.bits.data := cache_resp_data
-
-  assert(!nackfifo.io.enq.valid || nackfifo.io.enq.ready, "nackfifo overflow\n")
 
   if(DEBUG_PRINTF_CACHE){
     when(tl_out.a.fire()){
