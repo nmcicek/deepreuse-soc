@@ -99,7 +99,7 @@ do
 								make sim CONFIG="$1"LSH"$2"SimConfig
 
 								mkdir -p output_sim
-								file_name=$1_$2_${nSets_CC[setNumCC]}_${nWays_CC[wayNumCC]}_${nBBs[blockNum]}_${rowBits_CC[rowBitCC]}_${nSets_CC[setNumCC]}_${nWays_CC[wayNumCC]}_${nBB_CC[blockNumCC]}_${rowBits_CC[rowBitCC]}_layer${i} 
+								file_name=$1_$2_CC_${nSets_CC[setNumCC]}_${nWays_CC[wayNumCC]}_${rowBits_CC[rowBitCC]}_ID_${nSets_ID[setNumID]}_${nWays_ID[wayNumID]}_${rowBits_ID[rowBitID]}_${nBBs[blockNum]}_layer${i} 
 								builds/lsh-accelerator/simulator-FPGA-FPGAChip 2> output_sim/${file_name}.log
 
 								grepped_value="$(grep -rni "completed" output_sim/${file_name}.log)"

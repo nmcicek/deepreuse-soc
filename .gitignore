@@ -2,3 +2,6 @@ project/
 target/
 builds/
 lib/
+verisim/
+output_sim/
+*.vcd

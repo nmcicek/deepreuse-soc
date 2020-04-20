@@ -517,7 +517,7 @@ int main(int argc, char** argv)
 
   // other inputs
   tile->lshIO_hashConfReg = 15;
-  tile->lshIO_dimConfReg = 20;
+  tile->lshIO_dimConfReg = 12;
 
   // eval tile
   while(!tile->lshIO_success){

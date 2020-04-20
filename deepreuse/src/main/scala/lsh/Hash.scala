@@ -28,7 +28,7 @@ class Hash(implicit p: Parameters) extends AcceleratorModule {
 
   val result = Wire(Vec(maxHashSize,UInt(width = 1)))
   for ((projection, i) <- projections.bits.zipWithIndex ) {
-    result(i) := Mux(i.U < io.hashConfReg, ~projection(dataSize-1), 0.U)
+    result(i) := Mux(i.U < io.hashConfReg, ~projection(2*dataSize-1), 0.U)
   }
 
   io.key.bits := result.asUInt()

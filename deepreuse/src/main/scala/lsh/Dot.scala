@@ -13,7 +13,7 @@ class DOT(implicit p: Parameters) extends AcceleratorModule {
   val io = new Bundle {
     val inputData          = Input(Valid(Vec(maxVectorDim, UInt(dataSize.W))))
     val hash_table         = Input(Valid(Vec(maxHashSize, Vec(maxVectorDim, UInt(dataSize.W)))))
-    val result             = Output(Valid(Vec(maxHashSize, UInt(dataSize.W))))
+    val result             = Output(Valid(Vec(maxHashSize, UInt((2*dataSize).W))))
     val hashConfReg        = Input(UInt())
     val dimConfReg         = Input(UInt())
     val enable             = Input(Bool())
@@ -32,7 +32,7 @@ class DOT(implicit p: Parameters) extends AcceleratorModule {
   }
   
   val vector_size = maxVectorDim + (0 until log2Up(maxVectorDim)).foldLeft(0)((a,b) => a + math.ceil(maxVectorDim/math.pow(2,b)).toInt) + 1
-  val intPipeNode = Wire(Vec(maxHashSize, Vec(vector_size, Valid(UInt(dataSize.W)))))
+  val intPipeNode = Wire(Vec(maxHashSize, Vec(vector_size, Valid(UInt((2*dataSize).W)))))
   var outIndex = collection.mutable.ArrayBuffer.fill(maxHashSize)(0)
   var inIndex = collection.mutable.ArrayBuffer.fill(maxHashSize)(0)
 

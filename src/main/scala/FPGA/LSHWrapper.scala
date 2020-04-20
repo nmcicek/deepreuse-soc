@@ -72,9 +72,9 @@ class LSHWrapperModule(outer: LSHWrapper) extends BaseWrapperModule(outer)
   cycle := cycle + 1.U
   when(readEn){
     addrCnt := addrCnt + 1.U
-//   if(DEBUG_PRINTF_LOG){
+   if(DEBUG_PRINTF_LOG){
     	printf("Address incremented - curAddr: 0x%x cycle: %d\n", addrCnt, cycle)
-//	}
+	}
   }
 
   lshRom.io.clock := clock

@@ -45,7 +45,7 @@ class LSHAdvancedModule(outer: LSHAdvanced) extends BaseLSHModule(outer) {
   val id_cache = outer.id_cache.module
 
   /* Calculate latency of similarity detection */
-  val LSHLatency = 1 + log2Up(maxVectorDim)  // multiply=1 addition=1
+  val LSHLatency = log2Up(maxVectorDim)  // multiply=1 addition=1
 
   val stalled = Wire(Bool())
   /********** DEFINITIONS **********/
@@ -120,7 +120,7 @@ class LSHAdvancedModule(outer: LSHAdvanced) extends BaseLSHModule(outer) {
   val cacheReqData = Pipe(sdmInputData.valid, sdmInputData.bits, LSHLatency, !stalled)
   val cacheReqID = Pipe(sdmInputID.valid, sdmInputID.bits, LSHLatency, !stalled) 
   val cacheReqEntryValid = Pipe(Reg(next=sdmInputID.valid), entryValid, LSHLatency-1, !stalled)
-  val cacheReqValid = indexModule.io.key.valid
+  val cacheReqValid = indexModule.io.key.valid && !stalled
   val cacheReqKey = indexModule.io.key.bits
 
   assert(!(cacheReqData.valid ^ cacheReqID.valid), "delayed input data is not correct!")

@@ -8,7 +8,7 @@ package constants{
     val DEBUG_PRINTF_LSH = false
     val DEBUG_PRINTF_CACHE = false
     val DEBUG_PRINTF_LOG = false
-    val DEBUG_PRINTF_VERIFICATION = true
+    val DEBUG_PRINTF_VERIFICATION = false
   }	
 
 }
