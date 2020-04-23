@@ -8,6 +8,8 @@ import freechips.rocketchip.config.Parameters
 import freechips.rocketchip.diplomacy._
 import freechips.rocketchip.tilelink._
 import freechips.rocketchip.subsystem._
+import freechips.rocketchip.amba.axi4._
+import freechips.rocketchip.util._
 
 import deepreuse.lsh._
 import deepreuse.common._
@@ -30,10 +32,35 @@ class LSHWrapper(implicit p:Parameters) extends BaseWrapper
   val bh = LazyModule(new TLBroadcast(lineBytes, nTrackers, bufferless))  
   val ww = LazyModule(new TLWidthWidget(cacheRowBytes))
 
+  val buffer  = LazyModule(new TLBuffer)
+  val toaxi4  = LazyModule(new TLToAXI4(adapterName = Some("mem")))
+  val indexer = LazyModule(new AXI4IdIndexer(idBits = 4))
+  val deint   = LazyModule(new AXI4Deinterleaver(p(MemoryBusKey).blockBytes))
+  val yank    = LazyModule(new AXI4UserYanker)
+  val nMemoryChannels = 1
+  val portName = "axi4"
+  val device = new MemoryDevice
+
+  val memAXI4Node = AXI4SlaveNode(Seq(
+    AXI4SlavePortParameters(
+      slaves = Seq(AXI4SlaveParameters(
+        address       = Seq(p(MemoryModelKey)),
+        resources     = device.reg,
+        regionType    = RegionType.UNCACHED, // cacheable
+        executable    = true,
+        supportsWrite = TransferSizes(1, cacheBlockBytes),
+        supportsRead  = TransferSizes(1, cacheBlockBytes),
+        interleavedId = Some(0))), // slave does not interleave read responses
+      beatBytes = lineBytes)
+  ))
+
   var xilinxkc705mig: XilinxKC705MIG = null
   if(p(SimEnabled)){
-    val memoryModel = LazyModule(new TLRAM(address = p(MemoryModelKey), beatBytes = lineBytes))
-    if(p(Advanced)) memoryModel.node := TLFragmenter(lineBytes, cacheBlockBytes, holdFirstDeny=true) := bh.node := ww.node := lsh.common_node.node else memoryModel.node := lsh.masterNode
+    if(p(Advanced)) {
+      memAXI4Node :*= yank.node :*= deint.node :*= indexer.node :*= toaxi4.node :*= buffer.node :*= TLFragmenter(lineBytes, cacheBlockBytes, holdFirstDeny=true) :*= bh.node :*= ww.node :*= lsh.common_node.node 
+    } else {
+      memAXI4Node :*= yank.node :*= deint.node :*= indexer.node :*= toaxi4.node :*= buffer.node :*= lsh.masterNode 
+    }
   }else{
     xilinxkc705mig = LazyModule(new XilinxKC705MIG(p(MemoryXilinxDDRKey)))
     if(p(Advanced)) xilinxkc705mig.node := TLFragmenter(lineBytes, cacheBlockBytes, holdFirstDeny=true) := bh.node := ww.node := lsh.common_node.node else xilinxkc705mig.node := lsh.masterNode
@@ -55,6 +82,13 @@ class LSHWrapperModule(outer: LSHWrapper) extends BaseWrapperModule(outer)
     xilinxkc705mig = IO(new XilinxKC705MIGIO(depth))
     xilinxkc705mig <> outer.xilinxkc705mig.module.io.port
     xilinxkc705mig.suggestName("xilinxkc705migIO")
+  }else{
+    val memSize = 0x80000000L
+    val lineSize = outer.cacheBlockBytes
+    val mem = Module(new SimDRAM(memSize, lineSize, outer.memAXI4Node.in(0)._2.bundle))
+    mem.io.axi <> outer.memAXI4Node.in(0)._1
+    mem.io.clock := clock
+    mem.io.reset := reset
   }
   /****** CONNECT XILINXMIGIO ******/
 
@@ -72,9 +106,9 @@ class LSHWrapperModule(outer: LSHWrapper) extends BaseWrapperModule(outer)
   cycle := cycle + 1.U
   when(readEn){
     addrCnt := addrCnt + 1.U
-   if(DEBUG_PRINTF_LOG){
-    	printf("Address incremented - curAddr: 0x%x cycle: %d\n", addrCnt, cycle)
-	}
+    when(lshModule.io.success || lshModule.io.verify){
+      printf("Address incremented - curAddr: 0x%x cycle: %d verify: %d success: %d\n", addrCnt, cycle, lshModule.io.verify, lshModule.io.success)
+    }
   }
 
   lshRom.io.clock := clock
@@ -100,6 +134,8 @@ class LSHWrapperModule(outer: LSHWrapper) extends BaseWrapperModule(outer)
   }.otherwise{
     lshModule.io.verify := false.B
   }
+
+  lshModule.io.success := lshIO.get.success
 
   when(readIDVal){
   	readIDCnt := readIDCnt + UInt(1)

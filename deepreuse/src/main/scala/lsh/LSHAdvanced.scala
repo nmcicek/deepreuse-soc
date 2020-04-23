@@ -143,6 +143,7 @@ class LSHAdvancedModule(outer: LSHAdvanced) extends BaseLSHModule(outer) {
   cluster_cache.io.req.bits.data := cacheReqData.bits.asUInt
   cluster_cache.io.req.bits.cmd := Mux(io.readCentroid.valid, M_XRD, M_XWR) //store
   cluster_cache.io.verify := io.verify
+  cluster_cache.io.success := io.success
 
   id_cache.io.req.valid := io.readID.valid || cacheReqValid
   id_cache.io.req.bits.entryValid := io.readID.valid || cacheReqEntryValid.bits.asBool
@@ -150,6 +151,7 @@ class LSHAdvancedModule(outer: LSHAdvanced) extends BaseLSHModule(outer) {
   id_cache.io.req.bits.data := cacheReqKey
   id_cache.io.req.bits.cmd := Mux(io.readID.valid, M_XRD, M_XWR) //store
   id_cache.io.verify := io.verify
+  id_cache.io.success := io.success
 
   stalled := !(cluster_cache.io.req.ready && id_cache.io.req.ready)
   io.inputIDandData.ready := !stalled

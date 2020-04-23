@@ -32,4 +32,4 @@ VERILATOR_FLAGS := --top-module $(MODEL) \
   --output-split 20000 \
 	-Wno-STMTDLY -Wno-WIDTH --x-assign unique \
   -I$(sim_vsrcs) \
-  -O3 -CFLAGS "$(CXXFLAGS) -DVERILATOR -DTEST_HARNESS=V$(MODEL) -include $(base_dir)/deepreuse/src/main/resources/csrc/verilator.h -include $(base_dir)/deepreuse/src/main/resources/csrc/IEEEConverter.h"
+  -O3 -CFLAGS "$(CXXFLAGS) -DVERILATOR -DTEST_HARNESS=V$(MODEL) -include $(base_dir)/deepreuse/src/main/resources/csrc/verilator.h"

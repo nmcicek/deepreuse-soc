@@ -14,6 +14,7 @@ class ClusterCacheBundle(outer: ClusterCache)(implicit val p: Parameters) extend
   val req   = Decoupled(new ClusterCacheReq).flip
   val resp  = Decoupled(new ClusterCacheResp) 
   val verify = Flipped(Bool())
+  val success = Flipped(Bool())
 
   override def cloneType = new ClusterCacheBundle(outer).asInstanceOf[this.type]
 }
@@ -32,6 +33,7 @@ class IDCacheBundle(outer: IDCache)(implicit val p: Parameters) extends Bundle w
   val req   = Decoupled(new IDCacheReq).flip
   val resp  = Decoupled(new IDCacheResp) 
   val verify = Flipped(Bool())
+  val success = Flipped(Bool())
 
   override def cloneType = new IDCacheBundle(outer).asInstanceOf[this.type]
 }

@@ -305,13 +305,17 @@ class ClusterCacheModule(outer: ClusterCache) extends LazyModuleImp(outer) with 
   val nMiss = Reg(init=UInt(0,64))
   when(mshrs.io.req.fire()){
     nMiss := nMiss + UInt(1,64)
-    printf("CC-nMiss: 0x%x\n", nMiss)
+    when(io.verify || io.success){
+      printf("CC-nMiss: 0x%x verify: %d success: %d\n", nMiss, io.verify, io.success)
+    }
   }
 
   val nReqs = Reg(init=UInt(0,64))
   when(io.req.fire()){
     nReqs := nReqs + UInt(1,64)
-    printf("CC-nReqs: 0x%x\n", nReqs)
+    when(io.verify || io.success){
+      printf("CC-nReqs: 0x%x verify: %d success: %d\n", nReqs, io.verify, io.success)
+    }
   }
 
   // write to nack fifo
@@ -319,6 +323,22 @@ class ClusterCacheModule(outer: ClusterCache) extends LazyModuleImp(outer) with 
   nackfifo.io.enq.bits := s2_req
   nackfifo.io.enq.bits.data := cache_resp_data
 
+  val nMemReqs = Reg(init=UInt(0,64))
+  when(tl_out.a.fire()){
+    nMemReqs := nMemReqs + UInt(1,64)
+    when(io.verify || io.success){
+      printf("CC-nMemReqs: 0x%x verify: %d success: %d\n", nMemReqs, io.verify, io.success)
+    }
+  }
+
+  val nWBReqs = Reg(init=UInt(0,64))
+  when(tl_out.c.fire()){
+    nWBReqs := nWBReqs + UInt(1,64)
+    when(io.verify || io.success){
+      printf("CC-nWBReqs: 0x%x verify: %d success: %d\n", nWBReqs, io.verify, io.success)
+    }
+  }
+  
   if(DEBUG_PRINTF_CACHE){
     when(tl_out.a.fire()){
       printf("CC tl_out_a_address: 0x%x tl_out_a_data: 0x%x tl_out_a_size: 0x%x tl_out_a_source: 0x%x\n",

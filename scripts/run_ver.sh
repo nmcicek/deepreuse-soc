@@ -100,11 +100,11 @@ do
 
 								mkdir -p output_sim
 								file_name=$1_$2_CC_${nSets_CC[setNumCC]}_${nWays_CC[wayNumCC]}_${rowBits_CC[rowBitCC]}_ID_${nSets_ID[setNumID]}_${nWays_ID[wayNumID]}_${rowBits_ID[rowBitID]}_${nBBs[blockNum]}_layer${i} 
-								builds/lsh-accelerator/simulator-FPGA-FPGAChip 2> output_sim/${file_name}.log
+								cd builds/lsh-accelerator/ && ./simulator-FPGA-FPGAChip 2> ../../output_sim/${file_name}.log && cd ../../
 
 								grepped_value="$(grep -rni "completed" output_sim/${file_name}.log)"
 								IFS=' ' read -r -a array <<< "$grepped_value"
-								echo nSets_CC: ${nSets_CC[setNumCC]} nWays_CC: ${nWays_CC[wayNumCC]} nBBs_CC: ${nBB_CC[blockNumCC]} rowBits_CC: ${rowBits_CC[rowBitCC]} nSets_ID: ${nSets_CC[setNumCC]} nWays_ID: ${nWays_CC[wayNumCC]} nBBs_ID: ${nBB_CC[blockNumCC]} rowBits_ID: ${rowBits_CC[rowBitCC]} layer_num: ${i} cycle: ${grepped_value} >> output_sim/$1_$2.out
+								echo nSets_CC: ${nSets_CC[setNumCC]} nWays_CC: ${nWays_CC[wayNumCC]} nBBs_CC: ${nBB_CC[blockNumCC]} rowBits_CC: ${rowBits_CC[rowBitCC]} nSets_ID: ${nSets_ID[setNumID]} nWays_ID: ${nWays_ID[wayNumID]} nBBs_ID: ${nBBs[blockNum]} rowBits_ID: ${rowBits_ID[rowBitID]} layer_num: ${i} cycle: ${grepped_value} >> output_sim/$1_$2.out
 							done
 						done
 					done

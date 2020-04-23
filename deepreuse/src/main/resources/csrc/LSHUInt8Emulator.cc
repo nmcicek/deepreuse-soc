@@ -24,10 +24,16 @@
 static uint64_t trace_count = 0;
 bool verbose;
 bool done_reset;
+extern int dramsim;
 
 using namespace std;
 
 unsigned int main_time = 0;     // Current simulation time
+
+extern "C" int vpi_get_vlog_info(void* arg)
+{
+  return 0;
+}
 
 double sc_time_stamp () {       // Called by $time in Verilog
     return main_time;
@@ -55,7 +61,6 @@ int main(int argc, char** argv)
   Verilated::randReset(2);
   Verilated::commandArgs(argc, argv);
   TEST_HARNESS *tile = new TEST_HARNESS;
-
 
 #if VM_TRACE
   Verilated::traceEverOn(true); // Verilator must compute traced signals
@@ -515,9 +520,10 @@ int main(int argc, char** argv)
 
 
 
+
   // other inputs
-  tile->lshIO_hashConfReg = 15;
-  tile->lshIO_dimConfReg = 12;
+  tile->lshIO_hashConfReg = 16;
+  tile->lshIO_dimConfReg = 11;
 
   // eval tile
   while(!tile->lshIO_success){

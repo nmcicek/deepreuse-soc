@@ -31,6 +31,11 @@
 //   variables:
 //     - static const char * verilog_plusargs
 
+extern "C" int vpi_get_vlog_info(void* arg)
+{
+  return 0;
+}
+
 extern dtm_t* dtm;
 extern remote_bitbang_t * jtag;
 

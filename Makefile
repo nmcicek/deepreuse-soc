@@ -1,6 +1,7 @@
 base_dir := $(patsubst %/,%,$(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
 BUILD_DIR := $(base_dir)/builds/lsh-accelerator
 FPGA_DIR := $(base_dir)/fpga-shells/xilinx
+dramsim_dir := $(base_dir)/tools/DRAMSim2
 MODEL := FPGAChip
 PROJECT := FPGA
 CONFIG_PROJECT := FPGA
@@ -12,9 +13,34 @@ export BOARD := kc705
 # out file name
 long_name = $(CONFIG_PROJECT).$(CONFIG)
 
+# Compile DRAMSim2
+CXX ?= g++
+CXXFLAGS := -O1
+
+#--------------------------------------------------------------------
+# DRAMSim2
+#--------------------------------------------------------------------
+
+DRAMSIM_OBJS := $(patsubst %.cpp,%.o,$(wildcard $(base_dir)/tools/DRAMSim2/*.cpp))
+$(DRAMSIM_OBJS): %.o: %.cpp
+	$(CXX) $(CXXFLAGS) -DNO_STORAGE -DNO_OUTPUT -Dmain=nomain -c -o $@ $<
+
+dramsim_lib := $(dramsim_dir)/libdramsim.a
+$(dramsim_lib): $(DRAMSIM_OBJS)
+	ar rcs $@ $^
+
 # for verisim
 include $(base_dir)/Makefrag-variables
 include $(base_dir)/verisim/Makefrag-verilator
+
+# build dramsim2
+#$(dramsim_lib):
+#	echo "YOU ARE HERE DRAMSIM_LIB"
+#	$(MAKE) -C $(dramsim_dir)
+#	$(MAKE) -C $(dramsim_dir) $(notdir $@)
+
+$(BUILD_DIR)/dramsim2_ini: $(dramsim_dir)/dramsim2_ini
+	ln -sf $< $@
 
 # Set SBT
 SBT ?= java -Xmx2G -Xss8M -XX:MaxPermSize=256M -jar $(base_dir)/sbt-launch.jar ++2.12.4 
@@ -103,7 +129,7 @@ model_header = $(model_dir)/V$(MODEL).h
 
 sim_csrcs += $(base_dir)/deepreuse/src/main/resources/csrc/LSHUInt8Emulator.cc
 
-$(model_mk): $(sim_vsrcs) $(INSTALLED_VERILATOR)
+$(model_mk): $(sim_vsrcs) $(dramsim_lib) $(INSTALLED_VERILATOR)
 	rm -rf $(BUILD_DIR)/$(long_name)
 	mkdir -p $(BUILD_DIR)/$(long_name)
 	$(VERILATOR) $(VERILATOR_FLAGS) -Mdir $(BUILD_DIR)/$(long_name) \
@@ -114,7 +140,7 @@ $(model_mk): $(sim_vsrcs) $(INSTALLED_VERILATOR)
 
 # Building simulator also builds makefile .d fragment that is configuration-specific.
 $(BUILD_DIR)/$(long_name).d : $(sim) ;
-$(sim): $(model_mk) $(sim_csrcs)
+$(sim): $(model_mk) $(sim_csrcs) $(BUILD_DIR)/dramsim2_ini
 	$(MAKE) VM_PARALLEL_BUILDS=1 -C $(BUILD_DIR)/$(long_name) -f V$(MODEL).mk
 
 .PHONY: sim

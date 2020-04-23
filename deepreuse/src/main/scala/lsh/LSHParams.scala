@@ -67,6 +67,7 @@ abstract class BaseLSH(implicit p: Parameters) extends LazyModule {
 
 class BaseLSHBundle(implicit p: Parameters) extends AcceleratorBundle()(p) {
 
+  val success              = Input(Bool())
   val verify               = Input(Bool())
   val inputIDandData       = Flipped(new DecoupledIO(new fetchBufferEntry))
   val readID               = Flipped(new DecoupledIO(UInt(log2Up(maxNumOfInputs).W)))

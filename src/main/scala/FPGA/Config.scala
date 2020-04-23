@@ -25,12 +25,12 @@ class DefaultAcceleratorConfig extends Config((site, here, up) => {
     frequency = BigInt(50000000),
     lsh  = LSHParams(maxHashSize = 20, maxVectorDim = 18, numOfHashTables = 1, maxNumOfInputs = 4096000, dataSize = 8, fpuEnabled = false),
     fpu  = FPUParams(dataSize = 8, integerToFloatLatency = 5, mulAddLatency = 5, lshMulLatency = 8, lshAddLatency = 11, divLatency = 28),
-    layer = LayerParams(layerHashSize = 15, layerVectorDim = 12, layerBatchSize = 100, layerNumOfInputs = 144, layerNumOfSubVectors = 144, layerNum = 2)
+    layer = LayerParams(layerHashSize = 16, layerVectorDim = 11, layerBatchSize = 100, layerNumOfInputs = 2916, layerNumOfSubVectors = 33, layerNum = 0)
   )
   case BroadcastKey => BroadcastParams(nTrackers  = site(ClusterCacheKey).nMSHRs + site(IDCacheKey).nMSHRs, bufferless = false)
   case MemoryBusKey => MemoryBusParams(
     beatBytes = 8, 
-    blockBytes = 64
+    blockBytes = 128
   )
   case UartKey => UARTParams(
     address = None, 
@@ -43,8 +43,8 @@ class DefaultAcceleratorConfig extends Config((site, here, up) => {
     nTxEntries = 8, 
     nRxEntries = 8
   )
-  case ClusterCacheKey => ClusterCacheParams(nSets = 2048, nWays = 8, nMSHRs = 8, nSDQ = 16, nRPQ = 17, rowBits = 256)
-  case IDCacheKey => IDCacheParams(nSets = 2048, nWays = 8, nMSHRs = 8, nSDQ = 16, nRPQ = 17, rowBits = 256)
+  case ClusterCacheKey => ClusterCacheParams(nSets = 64, nWays = 8, nMSHRs = 4, nSDQ = 16, nRPQ = 17, rowBits = 256)
+  case IDCacheKey => IDCacheParams(nSets = 64, nWays = 8, nMSHRs = 4, nSDQ = 16, nRPQ = 17, rowBits = 256)
 })
 
 class CIFARNETAcceleratorConfig extends Config((site, here, up) => {
