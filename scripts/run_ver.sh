@@ -13,7 +13,7 @@ elif [[ $1 == 'VGGNET' ]]; then
 	layerHashSizes=("20" "20" "18" "18" "16" "16" "16" "16" "15" "15" "15" "15" "12" "12" "12" "12")
 	layerVectorDim=("9" "16" "16" "16" "16" "16" "16" "16" "16" "18" "18" "18" "18" "18" "18" "18")
 	layerNumOfInputs=("50176" "50176" "12544" "12544" "3136" "3136" "3136" "3136" "784" "784" "784" "784" "196" "196" "196" "196")
-	layerNumOfSubVectors=("3" "36" "36" "72" "72" "144" "144" "144" "144" "192" "192" "192" "192" "192" "192" "192")
+	layerNumOfSubVectors=("3" "36" "36" "72" "72" "144" "144" "144" "144" "256" "256" "256" "256" "256" "256" "256")
 	layerBatchSize=("16" "16" "16" "16" "16" "16" "16" "16" "16" "16" "16" "16" "16" "16" "16" "16" )
 elif [[ $1 == 'CIFARNET' ]]; then
 	maxHashSize=15
@@ -26,11 +26,11 @@ elif [[ $1 == 'CIFARNET' ]]; then
 elif [[ $1 == 'MOBILENET' ]]; then
 	maxHashSize=18
 	maxVectorDim=16
-	layerHashSizes=("18" "18" "18" "18" "18" "18" "18" "18" "18" "18" "18" "18" "18" "18" "18" "18" "18" "18" "18" "18" "18" "18" "18" "18" "18" "18" "18")
-	layerVectorDim=("3" "3" "4" "3" "4" "3" "8" "3" "8" "3" "8" "3" "8" "3" "8" "3" "8" "3" "8" "3" "8" "3" "8" "3" "8" "3" "16")
+	layerHashSizes=("18" "18" "18" "18" "10" "10" "10" "10" "10" "10" "8" "8" "8" "8")
+	layerVectorDim=("3" "4" "4" "8" "8" "8" "8" "8" "8" "8" "8" "8" "8" "16")
 	layerNumOfInputs=("12544" "12544" "12544" "3136" "3136" "3136"  "3136" "784" "784" "784" "784" "196" "196" "196" "196" "196" "196" "196" "196" "196" "196" "196" "196" "49" "49" "49" "49")
-	layerNumOfSubVectors=("9" "3" "8" "3" "16" "3" "16" "3" "16" "3" "32" "3" "32" "3" "64" "3" "64" "3" "64" "3" "64" "3" "64" "3" "64" "3" "64")
-	layerBatchSize=("4" "4" "4" "4" "4" "4" "4" "4" "4" "4" "4" "4" "4" "4" "4" "4" "4" "4" "4" "4" "4" "4" "4" "4" "4" "4" "4")
+	layerNumOfSubVectors=("9" "8" "16" "16" "16" "32" "32" "64" "64" "64" "64" "64" "64" "64")
+	layerBatchSize=("4" "4" "4" "4" "4" "4" "4" "4" "4" "4" "4" "4" "4" "4")
 fi
 
 HashTableInit="${HashTableInit}\ \ tile->lshIO_hash_table_valid = true;\n"
@@ -48,15 +48,15 @@ sed -i '/^  tile->lshIO_hash_table/d'  deepreuse/src/main/resources/csrc/LSHUInt
 sed -i "/\/\/ hash table inputs/a ${HashTableInit}" deepreuse/src/main/resources/csrc/LSHUInt8Emulator.cc
 sed -i "s/sim_csrcs \+.*/sim_csrcs \+\= \$(base_dir)\/deepreuse\/src\/main\/resources\/csrc\/LSHUInt8Emulator\.cc/g" ./Makefile
 
-nSets_CC=("64" "128" "512" "2048")
+nSets_CC=("16" "32" "64" "128" "512" "2048")
 nWays_CC=("8" "16")
 rowBits_CC=("256")
 
-nSets_ID=("64" "128" "512" "2048")
+nSets_ID=("16" "32" "64" "128" "512" "2048")
 nWays_ID=("8" "16")
 rowBits_ID=("256")
 
-nBBs=("64" "128")
+nBBs=("64")
 
 echo "Starting for "$1
 

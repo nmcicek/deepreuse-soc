@@ -14,7 +14,7 @@ import deepreuse.memory._
 
 import sifive.blocks.devices.uart._
 
-import fpgashells.devices.xilinx.xilinxkc705mig._
+import fpgashells.devices.xilinx.xilinxvcu118mig._
 
 
 class UartWrapper(implicit p: Parameters) extends BaseWrapper
@@ -30,13 +30,13 @@ class UartWrapper(implicit p: Parameters) extends BaseWrapper
   val bh = LazyModule(new TLBroadcast(lineBytes, nTrackers, bufferless))  
   val ww = LazyModule(new TLWidthWidget(cacheRowBytes))
 
-  var xilinxkc705mig: XilinxKC705MIG = null
+  var xilinxvcu118mig: XilinxVCU118MIG = null
   if(p(SimEnabled)){
     val memoryModel = LazyModule(new TLRAM(address = p(MemoryModelKey), beatBytes = lineBytes))
     if(p(Advanced)) memoryModel.node := TLFragmenter(lineBytes, cacheBlockBytes, holdFirstDeny=true) := bh.node := ww.node := lsh.common_node.node else memoryModel.node := lsh.masterNode
   }else{
-    xilinxkc705mig = LazyModule(new XilinxKC705MIG(p(MemoryXilinxDDRKey)))
-    if(p(Advanced)) xilinxkc705mig.node := TLFragmenter(lineBytes, cacheBlockBytes, holdFirstDeny=true) := bh.node := ww.node := lsh.common_node.node else xilinxkc705mig.node := lsh.masterNode
+    xilinxvcu118mig = LazyModule(new XilinxVCU118MIG(p(MemoryXilinxDDRKey)))
+    if(p(Advanced)) xilinxvcu118mig.node := TLFragmenter(lineBytes, cacheBlockBytes, holdFirstDeny=true) := bh.node := ww.node := lsh.common_node.node else xilinxvcu118mig.node := lsh.masterNode
   }
   
   override lazy val module = new UartWrapperModule(this)
@@ -49,11 +49,11 @@ class UartWrapperModule(outer: UartWrapper) extends BaseWrapperModule(outer)
   require (ranges.size == 1, "DDR range must be contiguous")
   val depth = ranges.head.size
 
-  var xilinxkc705mig: XilinxKC705MIGIO = null
+  var xilinxvcu118mig: XilinxVCU118MIGIO = null
   if(!p(SimEnabled)){
-    xilinxkc705mig = IO(new XilinxKC705MIGIO(depth))
-    xilinxkc705mig <> outer.xilinxkc705mig.module.io.port
-    xilinxkc705mig.suggestName("xilinxkc705migIO")
+    xilinxvcu118mig = IO(new XilinxVCU118MIGIO(depth))
+    xilinxvcu118mig <> outer.xilinxvcu118mig.module.io.port
+    xilinxvcu118mig.suggestName("xilinxvcu118migIO")
   }
 
   val lshModule = outer.lsh.module

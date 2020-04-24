@@ -16,7 +16,7 @@ import deepreuse.common._
 import deepreuse.wrapper._
 import deepreuse.memory._
 
-import fpgashells.devices.xilinx.xilinxkc705mig._
+import fpgashells.devices.xilinx.xilinxvcu118mig._
 
 
 class LSHWrapper(implicit p:Parameters) extends BaseWrapper
@@ -54,7 +54,7 @@ class LSHWrapper(implicit p:Parameters) extends BaseWrapper
       beatBytes = lineBytes)
   ))
 
-  var xilinxkc705mig: XilinxKC705MIG = null
+  var xilinxvcu118mig: XilinxVCU118MIG = null
   if(p(SimEnabled)){
     if(p(Advanced)) {
       memAXI4Node :*= yank.node :*= deint.node :*= indexer.node :*= toaxi4.node :*= buffer.node :*= TLFragmenter(lineBytes, cacheBlockBytes, holdFirstDeny=true) :*= bh.node :*= ww.node :*= lsh.common_node.node 
@@ -62,8 +62,8 @@ class LSHWrapper(implicit p:Parameters) extends BaseWrapper
       memAXI4Node :*= yank.node :*= deint.node :*= indexer.node :*= toaxi4.node :*= buffer.node :*= lsh.masterNode 
     }
   }else{
-    xilinxkc705mig = LazyModule(new XilinxKC705MIG(p(MemoryXilinxDDRKey)))
-    if(p(Advanced)) xilinxkc705mig.node := TLFragmenter(lineBytes, cacheBlockBytes, holdFirstDeny=true) := bh.node := ww.node := lsh.common_node.node else xilinxkc705mig.node := lsh.masterNode
+    xilinxvcu118mig = LazyModule(new XilinxVCU118MIG(p(MemoryXilinxDDRKey)))
+    if(p(Advanced)) xilinxvcu118mig.node := TLFragmenter(lineBytes, cacheBlockBytes, holdFirstDeny=true) := bh.node := ww.node := lsh.common_node.node else xilinxvcu118mig.node := lsh.masterNode
   }
 
   override lazy val module = new LSHWrapperModule(this)
@@ -77,11 +77,11 @@ class LSHWrapperModule(outer: LSHWrapper) extends BaseWrapperModule(outer)
   val ranges = AddressRange.fromSets(p(MemoryXilinxDDRKey).address)
   require (ranges.size == 1, "DDR range must be contiguous")
   val depth = ranges.head.size
-  var xilinxkc705mig: XilinxKC705MIGIO = null
+  var xilinxvcu118mig: XilinxVCU118MIGIO = null
   if(!p(SimEnabled)){
-    xilinxkc705mig = IO(new XilinxKC705MIGIO(depth))
-    xilinxkc705mig <> outer.xilinxkc705mig.module.io.port
-    xilinxkc705mig.suggestName("xilinxkc705migIO")
+    xilinxvcu118mig = IO(new XilinxVCU118MIGIO(depth))
+    xilinxvcu118mig <> outer.xilinxvcu118mig.module.io.port
+    xilinxvcu118mig.suggestName("xilinxvcu118migIO")
   }else{
     val memSize = 0x80000000L
     val lineSize = outer.cacheBlockBytes
@@ -106,9 +106,6 @@ class LSHWrapperModule(outer: LSHWrapper) extends BaseWrapperModule(outer)
   cycle := cycle + 1.U
   when(readEn){
     addrCnt := addrCnt + 1.U
-    when(lshModule.io.success || lshModule.io.verify){
-      printf("Address incremented - curAddr: 0x%x cycle: %d verify: %d success: %d\n", addrCnt, cycle, lshModule.io.verify, lshModule.io.success)
-    }
   }
 
   lshRom.io.clock := clock
@@ -128,14 +125,6 @@ class LSHWrapperModule(outer: LSHWrapper) extends BaseWrapperModule(outer)
   // counters
   val readIDCnt = Reg(init = UInt(0, log2Up(nLayerEntry) + 1))
   val readIDVal = (readIDCnt =/= nLayerEntry.U) && (lshModule.io.idCacheReady || lshModule.io.readID.ready) && (addrCnt === nLayerEntry.U)
-
-  when(addrCnt === nLayerEntry.U){
-    lshModule.io.verify := true.B
-  }.otherwise{
-    lshModule.io.verify := false.B
-  }
-
-  lshModule.io.success := lshIO.get.success
 
   when(readIDVal){
   	readIDCnt := readIDCnt + UInt(1)
@@ -190,7 +179,18 @@ class LSHWrapperModule(outer: LSHWrapper) extends BaseWrapperModule(outer)
 
   dontTouch(lshModule.io.inputIDandData.bits.inputData)
 
-  lshIO.get.success := (addrCnt === nLayerEntry.U) && (readValArrCnt === totalHashNum.U) && (readIDCnt === nLayerEntry.U)
+  lshIO.get.success := RegNext((addrCnt === nLayerEntry.U) && (readValArrCnt === totalHashNum.U) && (readIDCnt === nLayerEntry.U), init=Bool(false))
+  lshModule.io.success := (addrCnt === nLayerEntry.U) && (readValArrCnt === totalHashNum.U) && (readIDCnt === nLayerEntry.U)
+
+  when(addrCnt === nLayerEntry.U && RegNext(addrCnt) =/= nLayerEntry.U){
+    lshModule.io.verify := true.B
+  }.otherwise{
+    lshModule.io.verify := false.B
+  }
+  
+  when(lshModule.io.success || lshModule.io.verify){
+    printf("Address incremented - curAddr: 0x%x cycle: %d verify: %d success: %d\n", addrCnt, cycle, lshModule.io.verify, lshModule.io.success)
+  }
 
   if(DEBUG_PRINTF_LSH){
     printf("\n---LSHWrapper---\n")

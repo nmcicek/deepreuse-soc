@@ -12,7 +12,7 @@ import freechips.rocketchip.tilelink._
 import freechips.rocketchip.rocket.constants._
 
 
-case class XilinxKC705MIGParams(
+case class XilinxMIGParams(
   address : Seq[AddressSet]
 )
 
@@ -20,7 +20,7 @@ case object Advanced extends Field[Boolean](false)
 case object SimEnabled extends Field[Boolean](false)
 case object UartEnabled extends Field[Boolean](false)
 case object MemoryModelKey extends Field[AddressSet](AddressSet(0x80000000L,0x80000000L-1))
-case object MemoryXilinxDDRKey extends Field[XilinxKC705MIGParams]
+case object MemoryXilinxDDRKey extends Field[XilinxMIGParams]
 
 
 case class LSHParams(

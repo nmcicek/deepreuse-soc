@@ -6,21 +6,21 @@ import chisel3.core.withClockAndReset
 import freechips.rocketchip.config._
 import freechips.rocketchip.diplomacy._
 
-import fpgashells.shell.xilinx.kc705shell._
-import fpgashells.ip.xilinx.kc705mig._
-import fpgashells.devices.xilinx.xilinxkc705mig._
+import fpgashells.shell.xilinx.vcu118shell._
+import fpgashells.ip.xilinx.vcu118mig._
+import fpgashells.devices.xilinx.xilinxvcu118mig._
 
 import deepreuse.lsh._
 import deepreuse.wrapper._
 
 
-class FPGAChip(implicit p: Parameters) extends KC705Shell {
+class FPGAChip(implicit p: Parameters) extends VCU118Shell {
 
  	withClockAndReset(dut_clock, dut_reset){
 		
-		var ddr: XilinxKC705MIGPads = null
+		var ddr: XilinxVCU118MIGPads = null
 		if(!p(SimEnabled)){
-			ddr = IO(new XilinxKC705MIGPads(p(MemoryXilinxDDRKey)))
+			ddr = IO(new XilinxVCU118MIGPads(p(MemoryXilinxDDRKey)))
 			ddr.suggestName("ddrIO")
 		}
 
@@ -32,15 +32,14 @@ class FPGAChip(implicit p: Parameters) extends KC705Shell {
 
 			// Clock & Reset
 			if(!p(SimEnabled)){
-		    	dut.xilinxkc705mig.sys_clk_i := mig_clk200.asUInt
-		    	dut.xilinxkc705mig.clk_ref_i := mig_clk200.asUInt
-		    	mig_clock                    := dut.xilinxkc705mig.ui_clk
-		    	mig_sys_reset                := dut.xilinxkc705mig.ui_clk_sync_rst
-		    	mig_mmcm_locked              := dut.xilinxkc705mig.mmcm_locked
-		    	dut.xilinxkc705mig.aresetn   := mig_resetn
-		    	dut.xilinxkc705mig.sys_rst   := !kc705_sys_clock_mmcm0_locked
+		        	dut.xilinxvcu118mig.c0_sys_clk_i := sys_clock.asUInt
+		        	mig_clock                    := dut.xilinxvcu118mig.c0_ddr4_ui_clk
+		        	mig_sys_reset                := dut.xilinxvcu118mig.c0_ddr4_ui_clk_sync_rst
+		        	dut.xilinxvcu118mig.c0_ddr4_aresetn   := mig_resetn
+		        	dut.xilinxvcu118mig.sys_rst   := sys_reset
+                                dut_clock                   := dut.xilinxvcu118mig.addn_ui_clkout1
 
-		    	ddr <> dut.xilinxkc705mig
+		    	        ddr <> dut.xilinxvcu118mig
 		  	}
 	  	}else{
 			val dut = Module(LazyModule(new LSHWrapper).module)
@@ -50,15 +49,14 @@ class FPGAChip(implicit p: Parameters) extends KC705Shell {
 
 			// Clock & Reset
 			if(!p(SimEnabled)){
-			 	dut.xilinxkc705mig.sys_clk_i := mig_clk200.asUInt
-			 	dut.xilinxkc705mig.clk_ref_i := mig_clk200.asUInt
-			 	mig_clock                    := dut.xilinxkc705mig.ui_clk
-			 	mig_sys_reset                := dut.xilinxkc705mig.ui_clk_sync_rst
-			 	mig_mmcm_locked              := dut.xilinxkc705mig.mmcm_locked
-			 	dut.xilinxkc705mig.aresetn   := mig_resetn
-			 	dut.xilinxkc705mig.sys_rst   := !kc705_sys_clock_mmcm0_locked
+		                dut.xilinxvcu118mig.c0_sys_clk_i := sys_clock.asUInt
+		    	        mig_clock                    := dut.xilinxvcu118mig.c0_ddr4_ui_clk
+		    	        mig_sys_reset                := dut.xilinxvcu118mig.c0_ddr4_ui_clk_sync_rst
+		    	        dut.xilinxvcu118mig.c0_ddr4_aresetn   := mig_resetn
+		    	        dut.xilinxvcu118mig.sys_rst   := sys_reset
+                                dut_clock                   := dut.xilinxvcu118mig.addn_ui_clkout1
 
-			 	ddr <> dut.xilinxkc705mig
+			 	ddr <> dut.xilinxvcu118mig
 			}
 	  	} 	
   	}

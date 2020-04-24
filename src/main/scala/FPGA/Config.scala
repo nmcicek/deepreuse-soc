@@ -20,17 +20,17 @@ import fpgashells.devices.xilinx.xilinxkc705mig._
 class DefaultAcceleratorConfig extends Config((site, here, up) => {
   case XLen => 64
   case MemoryModelKey => AddressSet(0x80000000L,0x40000000L-1)
-  case MemoryXilinxDDRKey => XilinxKC705MIGParams(address = Seq(AddressSet(0x80000000L,0x40000000L-1))) //1GB
+  case MemoryXilinxDDRKey => XilinxMIGParams(address = Seq(AddressSet(0x80000000L,0x80000000L-1))) //1GB
   case AcceleratorKey => AcceleratorParams(
     frequency = BigInt(50000000),
     lsh  = LSHParams(maxHashSize = 20, maxVectorDim = 18, numOfHashTables = 1, maxNumOfInputs = 4096000, dataSize = 8, fpuEnabled = false),
     fpu  = FPUParams(dataSize = 8, integerToFloatLatency = 5, mulAddLatency = 5, lshMulLatency = 8, lshAddLatency = 11, divLatency = 28),
-    layer = LayerParams(layerHashSize = 16, layerVectorDim = 11, layerBatchSize = 100, layerNumOfInputs = 2916, layerNumOfSubVectors = 33, layerNum = 0)
+    layer = LayerParams(layerHashSize = 15, layerVectorDim = 5, layerBatchSize = 100, layerNumOfInputs = 1024, layerNumOfSubVectors = 15, layerNum = 0)
   )
   case BroadcastKey => BroadcastParams(nTrackers  = site(ClusterCacheKey).nMSHRs + site(IDCacheKey).nMSHRs, bufferless = false)
   case MemoryBusKey => MemoryBusParams(
     beatBytes = 8, 
-    blockBytes = 128
+    blockBytes = 64
   )
   case UartKey => UARTParams(
     address = None, 
@@ -43,8 +43,8 @@ class DefaultAcceleratorConfig extends Config((site, here, up) => {
     nTxEntries = 8, 
     nRxEntries = 8
   )
-  case ClusterCacheKey => ClusterCacheParams(nSets = 64, nWays = 8, nMSHRs = 4, nSDQ = 16, nRPQ = 17, rowBits = 256)
-  case IDCacheKey => IDCacheParams(nSets = 64, nWays = 8, nMSHRs = 4, nSDQ = 16, nRPQ = 17, rowBits = 256)
+  case ClusterCacheKey => ClusterCacheParams(nSets = 16, nWays = 8, nMSHRs = 4, nSDQ = 16, nRPQ = 17, rowBits = 256)
+  case IDCacheKey => IDCacheParams(nSets = 32, nWays = 8, nMSHRs = 4, nSDQ = 16, nRPQ = 17, rowBits = 256)
 })
 
 class CIFARNETAcceleratorConfig extends Config((site, here, up) => {
@@ -68,6 +68,12 @@ class VGGNETAcceleratorConfig extends Config((site, here, up) => {
 class MOBILENETAcceleratorConfig extends Config((site, here, up) => {
   case AcceleratorKey => up(AcceleratorKey, site).copy(
     lsh  = LSHParams(maxHashSize = 18, maxVectorDim = 16, numOfHashTables = 1, maxNumOfInputs = 451584, dataSize = 8, countSize = 8),
+  )
+})
+
+class FINALAcceleratorConfig extends Config((site, here, up) => {
+  case AcceleratorKey => up(AcceleratorKey, site).copy(
+    lsh  = LSHParams(maxHashSize = 20, maxVectorDim = 24, numOfHashTables = 1, maxNumOfInputs = 28901376, dataSize = 8, countSize = 8),
   )
 })
 
@@ -124,3 +130,6 @@ class MOBILENETLSHAdvancedFPGAConfig extends Config(new WithoutTLMonitors ++ new
 class MOBILENETUARTAdvancedFPGAConfig extends Config(new WithoutTLMonitors ++ new MOBILENETAcceleratorConfig ++ new withUartWrapper ++ new withAdvancedLSH ++ new DefaultAcceleratorConfig)
 class MOBILENETLSHBasicFPGAConfig extends Config(new WithoutTLMonitors ++ new MOBILENETAcceleratorConfig ++ new DefaultAcceleratorConfig)
 class MOBILENETUARTBasicFPGAConfig extends Config(new WithoutTLMonitors ++ new MOBILENETAcceleratorConfig ++ new withUartWrapper ++ new DefaultAcceleratorConfig)
+
+class FINALUARTAdvancedFPGAConfig extends Config(new WithoutTLMonitors ++ new FINALAcceleratorConfig ++ new withUartWrapper ++ new withAdvancedLSH ++ new DefaultAcceleratorConfig)
+class FINALUARTBasicFPGAConfig extends Config(new WithoutTLMonitors ++ new FINALAcceleratorConfig ++ new withUartWrapper ++ new DefaultAcceleratorConfig)

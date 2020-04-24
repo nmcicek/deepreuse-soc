@@ -14,14 +14,14 @@ import fpgashells.ip.xilinx.kc705mig.{KC705MIGIOClocksReset, KC705MIGIODDR, kc70
 import deepreuse.lsh._
 
 class XilinxKC705MIGPads(depth : BigInt) extends KC705MIGIODDR(depth) {
-  def this(c : XilinxKC705MIGParams) {
+  def this(c : XilinxMIGParams) {
     this(AddressRange.fromSets(c.address).head.size)
   }
 }
 
 class XilinxKC705MIGIO(depth : BigInt) extends KC705MIGIODDR(depth) with KC705MIGIOClocksReset
 
-class XilinxKC705MIGIsland(c : XilinxKC705MIGParams, val crossing: ClockCrossingType = AsynchronousCrossing(8))(implicit p: Parameters) extends LazyModule with CrossesToOnlyOneClockDomain {
+class XilinxKC705MIGIsland(c : XilinxMIGParams, val crossing: ClockCrossingType = AsynchronousCrossing(8))(implicit p: Parameters) extends LazyModule with CrossesToOnlyOneClockDomain {
   val ranges = AddressRange.fromSets(c.address)
   require (ranges.size == 1, "DDR range must be contiguous")
   val offset = ranges.head.base
@@ -145,7 +145,7 @@ class XilinxKC705MIGIsland(c : XilinxKC705MIGParams, val crossing: ClockCrossing
   }
 }
 
-class XilinxKC705MIG(c : XilinxKC705MIGParams, crossing: ClockCrossingType = AsynchronousCrossing(8))(implicit p: Parameters) extends LazyModule {
+class XilinxKC705MIG(c : XilinxMIGParams, crossing: ClockCrossingType = AsynchronousCrossing(8))(implicit p: Parameters) extends LazyModule {
   val ranges = AddressRange.fromSets(c.address)
   val depth = ranges.head.size
 

@@ -1,0 +1,15 @@
+#-----------------------------------------------------------
+# Vivado v2018.3 (64-bit)
+# SW Build 2405991 on Thu Dec  6 23:36:41 MST 2018
+# IP Build 2404404 on Fri Dec  7 01:43:56 MST 2018
+# Start of session at: Fri Apr 24 07:48:15 2020
+# Process ID: 68531
+# Current directory: /home/ozcan/nmcicek/deepreuse-soc-mcs-1
+# Command line: vivado
+# Log file: /home/ozcan/nmcicek/deepreuse-soc-mcs-1/vivado.log
+# Journal file: /home/ozcan/nmcicek/deepreuse-soc-mcs-1/vivado.jou
+#-----------------------------------------------------------
+start_gui
+create_project managed_ip_project /home/ozcan/nmcicek/managed_ip_project -part xc7vx485tffg1157-1 -ip
+set_property target_simulator XSim [current_project]
+set_property part xcvu9p-flga2104-2L-e [current_project]

@@ -8,7 +8,7 @@ CONFIG_PROJECT := FPGA
 CONFIG := CIFAR10UARTAdvancedFPGAConfig
 
 export fpga_common_script_dir=$(FPGA_DIR)/common/tcl
-export BOARD := kc705
+export BOARD := vcu118
 
 # out file name
 long_name = $(CONFIG_PROJECT).$(CONFIG)

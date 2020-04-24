@@ -1,71 +1,48 @@
 #!/bin/bash
-if [[ $1 == 'ALEXNET' ]]; then
-	maxHashSize=16
-	maxVectorDim=24
-	layerHashSizes=("16" "15" "15" "15" "15")
-	layerVectorDim=("11" "20" "12" "12" "24")
-	layerNumOfInputs=("2916" "676" "144" "144" "144")
-	layerBatchSize=("100" "100" "100" "100" "100")
-	layerNumOfSubVectors=("33" "80" "144" "288" "144")
-elif [[ $1 == 'VGGNET' ]]; then
-	maxHashSize=20
-	maxVectorDim=18
-	layerHashSizes=("20" "20" "18" "18" "16" "16" "16" "16" "15" "15" "15" "15" "12" "12" "12" "12")
-	layerVectorDim=("9" "16" "16" "16" "16" "16" "16" "16" "16" "18" "18" "18" "18" "18" "18" "18")
-	layerNumOfInputs=("50176" "50176" "12544" "12544" "3136" "3136" "3136" "3136" "784" "784" "784" "784" "196" "196" "196" "196")
-	layerNumOfSubVectors=("3" "36" "36" "72" "72" "144" "144" "144" "144" "192" "192" "192" "192" "192" "192" "192")
-	layerBatchSize=("16" "16" "16" "16" "16" "16" "16" "16" "16" "16" "16" "16" "16" "16" "16" "16" )
-elif [[ $1 == 'CIFARNET' ]]; then
-	maxHashSize=15
-	maxVectorDim=10
-	layerHashSizes=("15" "10")
-	layerVectorDim=("5" "10")
-	layerNumOfInputs=("1024" "256")
-	layerNumOfSubVectors=("15" "160")
-	layerBatchSize=("100" "100")
-elif [[ $1 == 'MOBILENET' ]]; then
-	maxHashSize=18
-	maxVectorDim=16
-	layerHashSizes=("18" "18" "18" "18" "18" "18" "18" "18" "18" "18" "18" "18" "18" "18" "18" "18" "18" "18" "18" "18" "18" "18" "18" "18" "18" "18" "18")
-	layerVectorDim=("3" "3" "4" "3" "4" "3" "8" "3" "8" "3" "8" "3" "8" "3" "8" "3" "8" "3" "8" "3" "8" "3" "8" "3" "8" "3" "16")
-	layerNumOfInputs=("12544" "12544" "12544" "3136" "3136" "3136"  "3136" "784" "784" "784" "784" "196" "196" "196" "196" "196" "196" "196" "196" "196" "196" "196" "196" "49" "49" "49" "49")
-	layerNumOfSubVectors=("9" "3" "8" "3" "16" "3" "16" "3" "16" "3" "32" "3" "32" "3" "64" "3" "64" "3" "64" "3" "64" "3" "64" "3" "64" "3" "64")
-	layerBatchSize=("4" "4" "4" "4" "4" "4" "4" "4" "4" "4" "4" "4" "4" "4" "4" "4" "4" "4" "4" "4" "4" "4" "4" "4" "4" "4" "4")
-fi
+maxHashSize=20
+maxVectorDim=24
 
-nSets=("64" "128" "512" "2048") # "64" "128" 
-nWays=("8" "16") # "8"
-blockBytes=("64" "128") # "128"
-rowBits=("256")
+nSets_CC=("16" "32" "64" "128" "512" "2048")
+nWays_CC=("8" "16")
+rowBits_CC=("256")
+
+nSets_ID=("16" "32" "64" "128" "512" "2048")
+nWays_ID=("8" "16")
+rowBits_ID=("256")
+
+nBBs=("64")
+
 frequency=("50") # "50" "75" "100" "125" "150"
 
 for freq in "${!frequency[@]}"
 do
-	for rowBit in "${!rowBits[@]}"
+	for wayNumCC in "${!nWays_CC[@]}"
 	do
-		for setNum in "${!nSets[@]}"
+		for wayNumID in "${!nWays_ID[@]}"
 		do
-			for wayNum in "${!nWays[@]}"
+			for setNumCC in "${!nSets_CC[@]}"
 			do
-				for blockNum in "${!blockBytes[@]}"
+				for setNumID in "${!nSets_ID[@]}"
 				do
 	
 					echo "Running for frequency of "${frequency[freq]}
+					echo "*** Cluster Cache Parameters ***"
+					echo "CC-nSets: "${nSets_CC[setNumCC]}" CC-nWays: "${nWays_CC[wayNumCC]}" CC-rowBits: "${rowBits_CC[0]}" nBBs: "${nBBs[0]}
+					sed -i "s/case ClusterCacheKey .*/case ClusterCacheKey => ClusterCacheParams(nSets = ${nSets_CC[setNumCC]}, nWays = ${nWays_CC[wayNumCC]}, nMSHRs = 4, nSDQ = 16, nRPQ = 17, rowBits = ${rowBits_CC[0]})/g" src/main/scala/FPGA/Config.scala
+
+					echo "*** ID Cache Parameters ***"
+					echo "ID-nSets: "${nSets_ID[setNumID]}" ID-nWays: "${nWays_ID[wayNumID]}" ID-rowBits: "${rowBits_ID[0]}" nBBs: "${nBBs[0]}
+					sed -i "s/case IDCacheKey .*/case IDCacheKey => IDCacheParams(nSets = ${nSets_ID[setNumID]}, nWays = ${nWays_ID[wayNumID]}, nMSHRs = 4, nSDQ = 16, nRPQ = 17, rowBits = ${rowBits_ID[0]})/g" src/main/scala/FPGA/Config.scala
+				
 					sed -i "s/    CONFIG.CLKOUT2_REQUESTED_OUT_FREQ.*/    CONFIG.CLKOUT2_REQUESTED_OUT_FREQ {${frequency[freq]}} \\\/g" fpga-shells/src/main/scala/ip/Xilinx.scala
 	
-					echo "Running for nSets of "${nSets[setNum]}" and nWays of "${nWays[wayNum]}" and blockBytes of "${blockBytes[blockNum]}
-					sed -i "s/nSets =.*/nSets = ${nSets[setNum]},/g" src/main/scala/FPGA/Config.scala
-					sed -i "s/nWays =.*/nWays = ${nWays[wayNum]},/g" src/main/scala/FPGA/Config.scala
-					sed -i "s/blockBytes =.*/blockBytes = ${blockBytes[blockNum]},/g" src/main/scala/FPGA/Config.scala
-					sed -i "s/rowBits =.*/rowBits = ${rowBits[rowBit]},/g" src/main/scala/FPGA/Config.scala
+					sed -i "s/blockBytes =.*/blockBytes = ${nBBs[0]}/g" src/main/scala/FPGA/Config.scala
 							
-					echo "Running for hash size of "${layerHashSizes[0]}" and vector dimension of "${layerVectorDim[0]}
-					sed -i "s/layer =.*/layer = LayerParams(layerHashSize = ${layerHashSizes[0]}, layerVectorDim = ${layerVectorDim[0]}, layerBatchSize = ${layerBatchSize[0]}, layerNumOfInputs = ${layerNumOfInputs[0]}, layerNumOfSubVectors = ${layerNumOfSubVectors[0]}, layerNum = 0)/g" src/main/scala/FPGA/Config.scala
-	
 					mkdir -p output_mcs
+					file_name=$1_$2_CC_${nSets_CC[setNumCC]}_${nWays_CC[wayNumCC]}_${rowBits_CC[0]}_ID_${nSets_ID[setNumID]}_${nWays_ID[wayNumID]}_${rowBits_ID[0]}_${nBBs[0]} 
 					make clean
-					make CONFIG="$1""$2""$3"FPGAConfig mcs
-					zip -r output_mcs/"$1"_nSets${nSets[setNum]}_nWays${nWays[wayNum]}_blockBytes${blockBytes[blockNum]}_freq${frequency[freq]}_reports.zip builds/lsh-accelerator/obj/report
+					make CONFIG="$1"UART"$2"FPGAConfig mcs
+					zip -r output_mcs/${file_name}_freq${frequency[freq]}_reports.zip builds/lsh-accelerator/obj/report
 	
 				done
 			done
