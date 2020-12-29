@@ -1,5 +1,4 @@
 #!/bin/sh
-rm -rf output_sim
 ${PWD}/scripts/run_ver_basic.sh CIFARNET Basic
 ${PWD}/scripts/run_ver_basic.sh ALEXNET Basic
 ${PWD}/scripts/run_ver_basic.sh VGGNET Basic

@@ -3,7 +3,7 @@ VSRCS := \
 	$(BUILD_DIR)/$(long_name).behav_srams.v \
 	$(base_dir)/deepreuse/src/main/resources/vsrc/LSHROM.v \
 	$(base_dir)/rocket-chip/src/main/resources/vsrc/AsyncResetReg.v \
-	$(base_dir)/fpga-shells/xilinx/vcu118/vsrc/vcu118reset.v \
+	$(base_dir)/fpga-shells/xilinx/kc705/vsrc/kc705reset.v \
 	$(base_dir)/deepreuse/src/main/resources/vsrc/plusarg_reader.v
 
 sim_vsrcs = \

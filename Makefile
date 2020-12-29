@@ -8,7 +8,7 @@ CONFIG_PROJECT := FPGA
 CONFIG := CIFAR10UARTAdvancedFPGAConfig
 
 export fpga_common_script_dir=$(FPGA_DIR)/common/tcl
-export BOARD := vcu118
+export BOARD := kc705
 
 # out file name
 long_name = $(CONFIG_PROJECT).$(CONFIG)
@@ -33,42 +33,35 @@ $(dramsim_lib): $(DRAMSIM_OBJS)
 include $(base_dir)/Makefrag-variables
 include $(base_dir)/verisim/Makefrag-verilator
 
-# build dramsim2
-#$(dramsim_lib):
-#	echo "YOU ARE HERE DRAMSIM_LIB"
-#	$(MAKE) -C $(dramsim_dir)
-#	$(MAKE) -C $(dramsim_dir) $(notdir $@)
 
-$(BUILD_DIR)/dramsim2_ini: $(dramsim_dir)/dramsim2_ini
+$(BUILD_DIR)/dramsim2_ini: $(dramsim_dir)/system.ini.example
 	ln -sf $< $@
 
 # Set SBT
-SBT ?= java -Xmx2G -Xss8M -XX:MaxPermSize=256M -jar $(base_dir)/sbt-launch.jar ++2.12.4 
-
-# function looking for scala sources
-lookup_scala_srcs = $(shell find $(1)/ -iname "*.scala" 2> /dev/null)
+SBT ?= java -jar $(base_dir)/rocket-chip/sbt-launch.jar ++2.12.10 
+export rocketchip_dir := $(base_dir)/rocket-chip
 
 # Build firrtl.jar and put it where chisel3 can find it.
-ROCKET_CLASSES ?= "$(base_dir)/rocket-chip/target/scala-2.12/classes:$(base_dir)/target/chisel3/target/scala-2.12/*"
 FIRRTL_JAR ?= $(base_dir)/rocket-chip/firrtl/utils/bin/firrtl.jar
-FIRRTL ?= java -Xmx2G -Xss8M -XX:MaxPermSize=256M -cp "$(FIRRTL_JAR)":"$(ROCKET_CLASSES)" firrtl.stage.FirrtlMain
+FIRRTL ?= java -Xmx2G -Xss8M -XX:MaxPermSize=256M -cp $(FIRRTL_JAR) firrtl.Driver -td $(BUILD_DIR)
 EXTRA_FIRRTL_ARGS = --infer-rw $(MODEL) --repl-seq-mem -c:$(MODEL):-o:$(BUILD_DIR)/$(notdir $(basename $@)).conf
 
 # to convert conf file to srams
 VLSI_MEM_GEN ?= $(base_dir)/rocket-chip/scripts/vlsi_mem_gen
 
-$(FIRRTL_JAR): $(call lookup_scala_srcs, $(base_dir)/rocket-chip/firrtl/src/main/scala)
-	$(MAKE) -C $(base_dir)/rocket-chip/firrtl SBT="$(SBT)" root_dir=$(base_dir)/rocket-chip/firrtl build-scala
+$(FIRRTL_JAR): $(shell find $(rocketchip_dir)/firrtl/src/main/scala -iname "*.scala") 
+	$(MAKE) -C $(rocketchip_dir)/firrtl SBT="$(SBT)" root_dir=$(rocketchip_dir)/firrtl build-scala
 	touch $(FIRRTL_JAR)
-	mkdir -p $(base_dir)/lib
-	cp -p $(FIRRTL_JAR) $(base_dir)/lib
-	
+	mkdir -p $(rocketchip_dir)/lib
+	cp -p $(FIRRTL_JAR) rocket-chip/lib
+	mkdir -p $(rocketchip_dir)/chisel3/lib
+	cp -p $(FIRRTL_JAR) $(rocketchip_dir)/chisel3/lib
 
 # Build .fir
 firrtl := $(BUILD_DIR)/$(long_name).fir
-$(firrtl): $(call lookup_scala_srcs, $(base_dir)/src/main/scala)
+$(firrtl): $(shell find $(base_dir)/src/main/scala -name '*.scala') $(FIRRTL_JAR) 
 	mkdir -p $(dir $@)
-	$(SBT) "runMain freechips.rocketchip.system.Generator $(BUILD_DIR) $(PROJECT) $(MODEL) $(CONFIG_PROJECT) $(CONFIG)"
+	$(SBT) "runMain freechips.rocketchip.system.Generator -td $(BUILD_DIR) -T $(PROJECT).$(MODEL) -C $(PROJECT).$(CONFIG)"
 
 .PHONY: firrtl
 firrtl: $(firrtl)

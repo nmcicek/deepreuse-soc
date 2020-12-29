@@ -1,3 +1,0 @@
-global def sifiveBlocksProject = millScalaProject "SifiveBlocks" here (rocketchipProject, Nil) "sifiveblocks" "SifiveBlocksBase"
-
-publish scalaProjects = sifiveBlocksProject

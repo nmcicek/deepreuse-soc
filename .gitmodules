@@ -1,0 +1,15 @@
+[submodule "rocket-chip"]
+	path = rocket-chip
+	url = https://github.com/chipsalliance/rocket-chip.git
+[submodule "sifive-blocks"]
+	path = sifive-blocks
+	url = https://github.com/sifive/sifive-blocks.git
+[submodule "fpga-shells"]
+	path = fpga-shells
+	url = https://github.com/sifive/fpga-shells.git
+[submodule "deepreuse"]
+	path = deepreuse
+	url = https://github.com/nmcicek/deepreuse.git
+[submodule "tools/DRAMSim2"]
+	path = tools/DRAMSim2
+	url = https://github.com/umd-memsys/DRAMSim2

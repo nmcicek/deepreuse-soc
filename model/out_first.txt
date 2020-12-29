@@ -1,0 +1,2 @@
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 4 exeLatency: 3

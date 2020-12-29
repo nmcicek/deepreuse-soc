@@ -1,0 +1,1134 @@
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 2 exeLatency: 0
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 88511
+Length of final_dispatched is 88511
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 2 exeLatency: 1
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 119899
+Length of final_dispatched is 119899
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 2 exeLatency: 2
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 85168
+Length of final_dispatched is 248898
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 2 exeLatency: 3
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 102299
+Length of final_dispatched is 396512
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 2 exeLatency: 4
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 93925
+Length of final_dispatched is 458405
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 2 exeLatency: 5
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 87529
+Length of final_dispatched is 512955
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 2 exeLatency: 6
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 112821
+Length of final_dispatched is 768769
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 2 exeLatency: 7
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 116448
+Length of final_dispatched is 907054
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 2 exeLatency: 8
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 118108
+Length of final_dispatched is 1034159
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 16 exeLatency: 0
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 58569
+Length of final_dispatched is 58569
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 16 exeLatency: 1
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 65892
+Length of final_dispatched is 65892
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 16 exeLatency: 2
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 82939
+Length of final_dispatched is 224903
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 16 exeLatency: 3
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 93237
+Length of final_dispatched is 349820
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 16 exeLatency: 4
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 64552
+Length of final_dispatched is 288358
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 16 exeLatency: 5
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 72821
+Length of final_dispatched is 402366
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 16 exeLatency: 6
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 74917
+Length of final_dispatched is 482831
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 16 exeLatency: 7
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 79579
+Length of final_dispatched is 591176
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 16 exeLatency: 8
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 65679
+Length of final_dispatched is 549913
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 128 exeLatency: 0
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 59022
+Length of final_dispatched is 59022
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 128 exeLatency: 1
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 68746
+Length of final_dispatched is 68746
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 128 exeLatency: 2
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 56900
+Length of final_dispatched is 141112
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 128 exeLatency: 3
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 74080
+Length of final_dispatched is 265988
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 128 exeLatency: 4
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 58538
+Length of final_dispatched is 253099
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 128 exeLatency: 5
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 57840
+Length of final_dispatched is 296364
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 128 exeLatency: 6
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 59396
+Length of final_dispatched is 370832
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 128 exeLatency: 7
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 65293
+Length of final_dispatched is 464516
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 128 exeLatency: 8
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 57575
+Length of final_dispatched is 455748
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 1024 exeLatency: 0
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 53067
+Length of final_dispatched is 53067
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 1024 exeLatency: 1
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 54400
+Length of final_dispatched is 54400
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 1024 exeLatency: 2
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 52320
+Length of final_dispatched is 123846
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 1024 exeLatency: 3
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 49558
+Length of final_dispatched is 160051
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 1024 exeLatency: 4
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 59342
+Length of final_dispatched is 249076
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 1024 exeLatency: 5
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 53666
+Length of final_dispatched is 266731
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 1024 exeLatency: 6
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 54029
+Length of final_dispatched is 316053
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 1024 exeLatency: 7
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 47661
+Length of final_dispatched is 305192
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 1024 exeLatency: 8
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 52713
+Length of final_dispatched is 406033
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 8096 exeLatency: 0
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 56015
+Length of final_dispatched is 56015
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 8096 exeLatency: 1
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 49561
+Length of final_dispatched is 49561
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 8096 exeLatency: 2
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 47399
+Length of final_dispatched is 106273
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 8096 exeLatency: 3
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 48020
+Length of final_dispatched is 148898
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 8096 exeLatency: 4
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 54994
+Length of final_dispatched is 230379
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 8096 exeLatency: 5
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 49898
+Length of final_dispatched is 243538
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 8096 exeLatency: 6
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 52483
+Length of final_dispatched is 303585
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 8096 exeLatency: 7
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 53205
+Length of final_dispatched is 351459
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 8096 exeLatency: 8
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 50438
+Length of final_dispatched is 384938
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 32768 exeLatency: 0
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 48085
+Length of final_dispatched is 48085
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 32768 exeLatency: 1
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 49004
+Length of final_dispatched is 49004
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 32768 exeLatency: 2
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 45306
+Length of final_dispatched is 96190
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 32768 exeLatency: 3
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 43868
+Length of final_dispatched is 125814
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 32768 exeLatency: 4
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 52184
+Length of final_dispatched is 212107
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 32768 exeLatency: 5
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 46682
+Length of final_dispatched is 211594
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 32768 exeLatency: 6
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 42748
+Length of final_dispatched is 213765
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 32768 exeLatency: 7
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 43676
+Length of final_dispatched is 255621
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 32768 exeLatency: 8
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 44614
+Length of final_dispatched is 310632
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 2 exeLatency: 0
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 78974
+Length of final_dispatched is 78974
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 2 exeLatency: 1
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 95741
+Length of final_dispatched is 95741
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 2 exeLatency: 2
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 87982
+Length of final_dispatched is 260682
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 2 exeLatency: 3
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 82493
+Length of final_dispatched is 326098
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 2 exeLatency: 4
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 81027
+Length of final_dispatched is 398813
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 2 exeLatency: 5
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 91561
+Length of final_dispatched is 541606
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 2 exeLatency: 6
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 88595
+Length of final_dispatched is 610206
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 2 exeLatency: 7
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 80843
+Length of final_dispatched is 639146
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 2 exeLatency: 8
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 78266
+Length of final_dispatched is 694116
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 16 exeLatency: 0
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 56644
+Length of final_dispatched is 56644
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 16 exeLatency: 1
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 58463
+Length of final_dispatched is 58463
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 16 exeLatency: 2
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 80559
+Length of final_dispatched is 232741
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 16 exeLatency: 3
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 54631
+Length of final_dispatched is 206271
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 16 exeLatency: 4
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 59364
+Length of final_dispatched is 281655
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 16 exeLatency: 5
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 58826
+Length of final_dispatched is 334969
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 16 exeLatency: 6
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 51791
+Length of final_dispatched is 346338
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 16 exeLatency: 7
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 60965
+Length of final_dispatched is 471889
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 16 exeLatency: 8
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 76500
+Length of final_dispatched is 667134
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 128 exeLatency: 0
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 39904
+Length of final_dispatched is 39904
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 128 exeLatency: 1
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 57613
+Length of final_dispatched is 57613
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 128 exeLatency: 2
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 46426
+Length of final_dispatched is 125976
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 128 exeLatency: 3
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 48871
+Length of final_dispatched is 178719
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 128 exeLatency: 4
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 58553
+Length of final_dispatched is 276407
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 128 exeLatency: 5
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 59096
+Length of final_dispatched is 336100
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 128 exeLatency: 6
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 45550
+Length of final_dispatched is 296017
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 128 exeLatency: 7
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 57484
+Length of final_dispatched is 437106
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 128 exeLatency: 8
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 35544
+Length of final_dispatched is 290021
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 1024 exeLatency: 0
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 46672
+Length of final_dispatched is 46672
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 1024 exeLatency: 1
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 40417
+Length of final_dispatched is 40417
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 1024 exeLatency: 2
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 40914
+Length of final_dispatched is 107496
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 1024 exeLatency: 3
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 45325
+Length of final_dispatched is 164554
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 1024 exeLatency: 4
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 39130
+Length of final_dispatched is 172661
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 1024 exeLatency: 5
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 42405
+Length of final_dispatched is 229079
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 1024 exeLatency: 6
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 43256
+Length of final_dispatched is 276189
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 1024 exeLatency: 7
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 38529
+Length of final_dispatched is 276619
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 1024 exeLatency: 8
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 41468
+Length of final_dispatched is 342658
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 8096 exeLatency: 0
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 38007
+Length of final_dispatched is 38007
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 8096 exeLatency: 1
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 36029
+Length of final_dispatched is 36029
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 8096 exeLatency: 2
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 36463
+Length of final_dispatched is 92599
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 8096 exeLatency: 3
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 44892
+Length of final_dispatched is 160987
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 8096 exeLatency: 4
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 39749
+Length of final_dispatched is 176511
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 8096 exeLatency: 5
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 44719
+Length of final_dispatched is 243275
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 8096 exeLatency: 6
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 44015
+Length of final_dispatched is 283917
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 8096 exeLatency: 7
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 37789
+Length of final_dispatched is 269075
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 8096 exeLatency: 8
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 36989
+Length of final_dispatched is 299527
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 32768 exeLatency: 0
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 35259
+Length of final_dispatched is 35259
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 32768 exeLatency: 1
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 35244
+Length of final_dispatched is 35244
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 32768 exeLatency: 2
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 39283
+Length of final_dispatched is 100661
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 32768 exeLatency: 3
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 34318
+Length of final_dispatched is 113840
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 32768 exeLatency: 4
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 32734
+Length of final_dispatched is 137645
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 32768 exeLatency: 5
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 41087
+Length of final_dispatched is 218321
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 32768 exeLatency: 6
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 36179
+Length of final_dispatched is 220893
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 32768 exeLatency: 7
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 34603
+Length of final_dispatched is 241402
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 32 nBanks: 32768 exeLatency: 8
+Length of FTQ is 16311
+Length of dotProducts is 16311
+Length of dispatched is 32566
+Length of final_dispatched is 253615
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 2 exeLatency: 0
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 71781
+Length of final_dispatched is 71781
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 2 exeLatency: 1
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 82702
+Length of final_dispatched is 82702
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 2 exeLatency: 2
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 69717
+Length of final_dispatched is 208099
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 2 exeLatency: 3
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 86199
+Length of final_dispatched is 341618
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 2 exeLatency: 4
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 84157
+Length of final_dispatched is 417542
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 2 exeLatency: 5
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 86102
+Length of final_dispatched is 511703
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 2 exeLatency: 6
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 81715
+Length of final_dispatched is 568292
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 2 exeLatency: 7
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 76398
+Length of final_dispatched is 607414
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 2 exeLatency: 8
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 68828
+Length of final_dispatched is 615674
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 16 exeLatency: 0
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 74895
+Length of final_dispatched is 74895
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 16 exeLatency: 1
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 47195
+Length of final_dispatched is 47195
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 16 exeLatency: 2
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 52682
+Length of final_dispatched is 154368
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 16 exeLatency: 3
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 47421
+Length of final_dispatched is 185187
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 16 exeLatency: 4
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 46883
+Length of final_dispatched is 227274
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 16 exeLatency: 5
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 53790
+Length of final_dispatched is 315987
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 16 exeLatency: 6
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 49023
+Length of final_dispatched is 335297
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 16 exeLatency: 7
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 72900
+Length of final_dispatched is 575885
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 16 exeLatency: 8
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 57533
+Length of final_dispatched is 508362
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 128 exeLatency: 0
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 50960
+Length of final_dispatched is 50960
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 128 exeLatency: 1
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 50428
+Length of final_dispatched is 50428
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 128 exeLatency: 2
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 42122
+Length of final_dispatched is 121464
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 128 exeLatency: 3
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 51394
+Length of final_dispatched is 200066
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 128 exeLatency: 4
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 40705
+Length of final_dispatched is 195981
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 128 exeLatency: 5
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 40041
+Length of final_dispatched is 231249
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 128 exeLatency: 6
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 32822
+Length of final_dispatched is 220342
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 128 exeLatency: 7
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 42644
+Length of final_dispatched is 331386
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 128 exeLatency: 8
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 48318
+Length of final_dispatched is 425047
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 1024 exeLatency: 0
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 27309
+Length of final_dispatched is 27309
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 1024 exeLatency: 1
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 27652
+Length of final_dispatched is 27652
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 1024 exeLatency: 2
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 34808
+Length of final_dispatched is 97414
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 1024 exeLatency: 3
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 35358
+Length of final_dispatched is 133976
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 1024 exeLatency: 4
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 31488
+Length of final_dispatched is 149145
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 1024 exeLatency: 5
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 43340
+Length of final_dispatched is 251969
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 1024 exeLatency: 6
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 32384
+Length of final_dispatched is 217340
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 1024 exeLatency: 7
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 28548
+Length of final_dispatched is 216746
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 1024 exeLatency: 8
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 37946
+Length of final_dispatched is 330027
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 8096 exeLatency: 0
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 24373
+Length of final_dispatched is 24373
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 8096 exeLatency: 1
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 23978
+Length of final_dispatched is 23978
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 8096 exeLatency: 2
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 32907
+Length of final_dispatched is 91461
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 8096 exeLatency: 3
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 29319
+Length of final_dispatched is 109382
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 8096 exeLatency: 4
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 40840
+Length of final_dispatched is 196887
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 8096 exeLatency: 5
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 23854
+Length of final_dispatched is 133656
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 8096 exeLatency: 6
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 36262
+Length of final_dispatched is 244134
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 8096 exeLatency: 7
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 33710
+Length of final_dispatched is 260677
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 8096 exeLatency: 8
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 31977
+Length of final_dispatched is 275508
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 32768 exeLatency: 0
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 27324
+Length of final_dispatched is 27324
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 32768 exeLatency: 1
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 21348
+Length of final_dispatched is 21348
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 32768 exeLatency: 2
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 25842
+Length of final_dispatched is 69252
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 32768 exeLatency: 3
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 22232
+Length of final_dispatched is 78569
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 32768 exeLatency: 4
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 33768
+Length of final_dispatched is 159400
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 32768 exeLatency: 5
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 27017
+Length of final_dispatched is 151193
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 32768 exeLatency: 6
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 36674
+Length of final_dispatched is 246623
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 32768 exeLatency: 7
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 29414
+Length of final_dispatched is 222501
+***********************************************************
+***********************************************************
+Configuration -> FanSize: 64 nBanks: 32768 exeLatency: 8
+Length of FTQ is 8112
+Length of dotProducts is 8112
+Length of dispatched is 26971
+Length of final_dispatched is 229919
+***********************************************************

@@ -1,10 +1,10 @@
 // See LICENSE for license details.
 organization := "bilkent"
 name := "deep-reuse"
-version := "0.1.0"
+version := "1.0.0"
 
 lazy val commonSettings = Seq(
-  scalaVersion := "2.12.4",  // This needs to match rocket-chip's scalaVersion
+  scalaVersion := "2.12.10",  // This needs to match rocket-chip's scalaVersion
   scalacOptions ++= Seq(
     "-deprecation",
     "-feature",

@@ -1,0 +1,7 @@
+***********************************************************
+Configuration -> FanSize: 16 nBanks: 4 exeLatency: 3
+Length of FTQ is 32857
+Length of dotProducts is 32857
+Length of dispatched is 105394
+Length of final_dispatched is 401258
+***********************************************************
