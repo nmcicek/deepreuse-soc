@@ -13,17 +13,9 @@ import deepreuse.wrapper._
 class FPGAChip(implicit p: Parameters) extends XilinxShell {
 
  	withClockAndReset(dut_clock, dut_reset){
-		
-  		if(p(UartEnabled)){
-   			val dut = Module(LazyModule(new UartWrapper).module)
-			val uartIO = Some(IO(new UARTIO))
-			uartIO.get <> dut.uartIO.get
-			uartIO.get.suggestName("uartIO")
-	  	}else{
-			val dut = Module(LazyModule(new LSHWrapper).module)
-			val lshIO = Some(IO(new BaseLSHBundle))
-			lshIO.get <> dut.lshIO.get
-			lshIO.get.suggestName("lshIO")
-	  	} 	
-  	}
+		val dut = Module(LazyModule(new LSHWrapper).module)
+		val lshIO = Some(IO(new BaseLSHBundle))
+		lshIO.get <> dut.lshIO.get
+		lshIO.get.suggestName("lshIO")
+	}
 }

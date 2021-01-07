@@ -22,18 +22,23 @@ lazy val commonSettings = Seq(
 lazy val rocketChip = RootProject(file("rocket-chip"))
 
 
-lazy val deepReuse = (project in file("deepreuse")).
+lazy val sifiveBlocks = (project in file("sifive-blocks")).
   dependsOn(rocketChip).
   settings(commonSettings: _*)
 
 
+lazy val deepReuse = (project in file("deepreuse")).
+  dependsOn(rocketChip, sifiveBlocks).
+  settings(commonSettings: _*)
+
+
 lazy val fpgaShells = (project in file("fpga-shells")).
-  dependsOn(rocketChip, deepReuse).
+  dependsOn(rocketChip, deepReuse, sifiveBlocks).
   settings(commonSettings: _*)
  
 
 lazy val topPlatforms = (project in file(".")).
-  dependsOn(rocketChip, deepReuse, fpgaShells).
+  dependsOn(rocketChip, sifiveBlocks, deepReuse, fpgaShells).
   settings(commonSettings: _*)
 
 

@@ -43,7 +43,7 @@ export rocketchip_dir := $(base_dir)/rocket-chip
 
 # Build firrtl.jar and put it where chisel3 can find it.
 FIRRTL_JAR ?= $(base_dir)/rocket-chip/firrtl/utils/bin/firrtl.jar
-FIRRTL ?= java -Xmx2G -Xss8M -XX:MaxPermSize=256M -cp $(FIRRTL_JAR) firrtl.Driver -td $(BUILD_DIR)
+FIRRTL ?= java -Xmx2G -Xss8M -XX:MaxPermSize=256M -cp $(FIRRTL_JAR) firrtl.stage.FirrtlMain -td $(BUILD_DIR)
 EXTRA_FIRRTL_ARGS = --infer-rw $(MODEL) --repl-seq-mem -c:$(MODEL):-o:$(BUILD_DIR)/$(notdir $(basename $@)).conf
 
 # to convert conf file to srams
@@ -70,7 +70,7 @@ firrtl: $(firrtl)
 # Build .v
 verilog := $(BUILD_DIR)/$(long_name).v $(BUILD_DIR)/$(long_name).conf
 $(verilog): $(firrtl) $(FIRRTL_JAR)
-	$(FIRRTL) -i $< -o $@ -X verilog -faf $(BUILD_DIR)/$(notdir $(basename $@)).anno.json $(EXTRA_FIRRTL_ARGS)
+	$(FIRRTL) -i $< -o $@ -X verilog
 
 
 .PHONY: verilog

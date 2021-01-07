@@ -33,27 +33,27 @@ class LSHWrapperModule(outer: LSHWrapper) extends BaseWrapperModule(outer)
   val cycle = Reg(init = UInt(0,32))
   cycle := cycle + 1.U
 
-  val readEn = lshModule.io.sram_uops.valid && lshModule.io.resetDone 
+  val readEn = lshModule.io.sram_req_uops.valid && lshModule.io.resetDone 
   lshRom.io.clock := clock
   lshRom.io.me := readEn
-  lshRom.io.address := lshModule.io.sram_uops.bits.address
-  lshModule.io.sram_uops.bits.data := lshRom.io.q
+  lshRom.io.address := lshModule.io.sram_req_uops.bits.address
+  lshModule.io.sram_resp_uops.data := lshRom.io.q
 
   // reconfiguration
-  lshModule.io.conf.hashSize  := lshIO.get.hashSize
-  lshModule.io.conf.vectorDim := lshIO.get.vectorDim
-  lshModule.io.conf.startAddr := lshIO.get.startAddr
-  lshModule.io.conf.endAddr   := lshIO.get.endAddr
-  lshModule.io.conf.data      := lshIO.get.data
+  lshModule.io.conf.hashSize  := lshIO.get.conf.hashSize
+  lshModule.io.conf.vectorDim := lshIO.get.conf.vectorDim
+  lshModule.io.conf.startAddr := lshIO.get.conf.startAddr
+  lshModule.io.conf.endAddr   := lshIO.get.conf.endAddr
+  lshModule.io.conf.data      := lshIO.get.conf.data
   
   // finish
   lshIO.get.resetDone         := lshModule.io.resetDone
-  lshIO.get.success           := lshModule.io.sram_uops.bits.done 
+  lshIO.get.success           := lshModule.io.sram_req_uops.bits.done 
 
   if(DEBUG_PRINTF_LSH){
     printf("\n---LSH WRAPPER---\n")
     printf("resetDone: %d success: %d readEn: %d address: 0x%x valid: %d\n",
-            lshIO.get.resetDone, lshIO.get.success, readEn, lshRom.io.address, lshModule.io.sram_uops.valid)
+            lshIO.get.resetDone, lshIO.get.success, readEn, lshRom.io.address, lshModule.io.sram_req_uops.valid)
   }
 }
 
