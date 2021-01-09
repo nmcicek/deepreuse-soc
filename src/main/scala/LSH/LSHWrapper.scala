@@ -40,11 +40,7 @@ class LSHWrapperModule(outer: LSHWrapper) extends BaseWrapperModule(outer)
   lshModule.io.sram_resp_uops.data := lshRom.io.q
 
   // reconfiguration
-  lshModule.io.conf.hashSize  := lshIO.get.conf.hashSize
-  lshModule.io.conf.vectorDim := lshIO.get.conf.vectorDim
-  lshModule.io.conf.startAddr := lshIO.get.conf.startAddr
-  lshModule.io.conf.endAddr   := lshIO.get.conf.endAddr
-  lshModule.io.conf.data      := lshIO.get.conf.data
+  lshModule.io.conf := lshIO.get.conf
   
   // finish
   lshIO.get.resetDone         := lshModule.io.resetDone
