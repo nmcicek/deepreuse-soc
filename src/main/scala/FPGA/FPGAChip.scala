@@ -14,8 +14,14 @@ class FPGAChip(implicit p: Parameters) extends XilinxShell {
 
  	withClockAndReset(dut_clock, dut_reset){
 		val dut = Module(LazyModule(new LSHWrapper).module)
-		val lshIO = Some(IO(new BaseLSHBundle))
-		lshIO.get <> dut.lshIO.get
-		lshIO.get.suggestName("lshIO")
+		if(p(SimEnabled)){
+			val lshIO = IO(new LSHWrapperBundle)
+			lshIO <> dut.lshIO
+			lshIO.suggestName("lshIO")
+		}else{
+			val fpgaIO = IO(new FPGAIOBundle)
+			fpgaIO <> dut.lshIO.fpga_io.get
+			fpgaIO.suggestName("fpgaIO")
+		}
 	}
 }

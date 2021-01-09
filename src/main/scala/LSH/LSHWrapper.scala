@@ -27,29 +27,32 @@ class LSHWrapper(implicit p:Parameters) extends BaseWrapper
 class LSHWrapperModule(outer: LSHWrapper) extends BaseWrapperModule(outer)
 {
   val lshModule = outer.lsh.module
-  val lshRom = Module(new LSHROM)
 
-  // independent cycle counter
-  val cycle = Reg(init = UInt(0,32))
-  cycle := cycle + 1.U
-
-  val readEn = lshModule.io.sram_req_uops.valid && lshModule.io.resetDone 
-  lshRom.io.clock := clock
-  lshRom.io.me := readEn
-  lshRom.io.address := lshModule.io.sram_req_uops.bits.address
-  lshModule.io.sram_resp_uops.data := lshRom.io.q
-
-  // reconfiguration
-  lshModule.io.conf := lshIO.get.conf
-  
-  // finish
-  lshIO.get.resetDone         := lshModule.io.resetDone
-  lshIO.get.success           := lshModule.io.sram_req_uops.bits.done 
-
-  if(DEBUG_PRINTF_LSH){
-    printf("\n---LSH WRAPPER---\n")
-    printf("resetDone: %d success: %d readEn: %d address: 0x%x valid: %d\n",
-            lshIO.get.resetDone, lshIO.get.success, readEn, lshRom.io.address, lshModule.io.sram_req_uops.valid)
+  if(p(SimEnabled)){
+    val lshRom = Module(new LSHROM)
+    
+    val cycle = Reg(init = UInt(0,32)) // independent cycle counter
+    cycle := cycle + 1.U
+    
+    val readEn = lshModule.io.sram_req_uops.valid && lshModule.io.resetDone 
+    lshRom.io.clock := clock
+    lshRom.io.me := readEn
+    lshRom.io.address := lshModule.io.sram_req_uops.bits.address
+    lshModule.io.sram_resp_uops.data := lshRom.io.q
+    
+    // reconfiguration
+    lshModule.io.conf.get   := lshIO.conf.get
+    
+    // finish
+    lshIO.resetDone         := lshModule.io.resetDone
+    lshIO.success           := lshModule.io.sram_req_uops.bits.done 
+    if(DEBUG_PRINTF_LSH){
+      printf("\n---LSH WRAPPER---\n")
+      printf("resetDone: %d success: %d readEn: %d address: 0x%x valid: %d\n",
+              lshIO.resetDone, lshIO.success, readEn, lshRom.io.address, lshModule.io.sram_req_uops.valid)
+    }    
+  }else{
+    lshModule.io.conf.get := ???
   }
 }
 
