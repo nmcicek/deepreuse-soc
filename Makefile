@@ -70,7 +70,7 @@ firrtl: $(firrtl)
 # Build .v
 verilog := $(BUILD_DIR)/$(long_name).v $(BUILD_DIR)/$(long_name).conf
 $(verilog): $(firrtl) $(FIRRTL_JAR)
-	$(FIRRTL) -i $< -o $@ -X verilog
+	$(FIRRTL) -i $< -o $@ -X verilog $(EXTRA_FIRRTL_ARGS)
 
 
 .PHONY: verilog

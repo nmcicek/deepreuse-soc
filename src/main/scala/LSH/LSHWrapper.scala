@@ -48,8 +48,8 @@ class LSHWrapperModule(outer: LSHWrapper) extends BaseWrapperModule(outer)
     lshIO.success           := lshModule.io.sram_req_uops.bits.done 
     if(DEBUG_PRINTF_LSH){
       printf("\n---LSH WRAPPER---\n")
-      printf("resetDone: %d success: %d readEn: %d address: 0x%x valid: %d\n",
-              lshIO.resetDone, lshIO.success, readEn, lshRom.io.address, lshModule.io.sram_req_uops.valid)
+      printf("resetDone: %d success: %d readEn: %d address: 0x%x valid: %d busy: %d\n",
+              lshIO.resetDone, lshIO.success, readEn, lshRom.io.address, lshModule.io.sram_req_uops.valid, lshModule.io.sram_req_uops.bits.busy)
     }    
   }else{
     lshModule.io.conf.get := ???
