@@ -19,7 +19,7 @@ class DefaultAcceleratorConfig extends Config((site, here, up) => {
   case XLen => 64
   case AcceleratorKey => AcceleratorParams(
     frequency = BigInt(50000000),
-    lsh  = LSHParams(maxHashSize = 15, maxVectorDim = 10, numOfHashTables = 1, maxNumOfInputs = 102400, dataSize = 8, countSize = 8, fpuEnabled = false),
+    lsh  = LSHParams(maxHashSize = 20, maxVectorDim = 24, numOfHashTables = 1, maxNumOfInputs = 102400, dataSize = 8, countSize = 8, fpuEnabled = false),
     fpu  = FPUParams(dataSize = 8, integerToFloatLatency = 5, mulAddLatency = 5, lshMulLatency = 8, lshAddLatency = 11, divLatency = 28),
     layer = LayerParams(layerHashSize = 15, layerVectorDim = 5, layerBatchSize = 100, layerNumOfInputs = 1024, layerNumOfSubVectors = 15, layerNum = 0, subVectorNum = 0)
   )
@@ -37,25 +37,25 @@ class DefaultAcceleratorConfig extends Config((site, here, up) => {
 
 class CIFARNETAcceleratorConfig extends Config((site, here, up) => {
   case AcceleratorKey => up(AcceleratorKey, site).copy(
-    lsh  = LSHParams(maxHashSize = 15, maxVectorDim = 10, numOfHashTables = 1, maxNumOfInputs = 102400, dataSize = 8, countSize = 32, fpuEnabled = false),
+    lsh  = LSHParams(maxHashSize = 20, maxVectorDim = 24, benchmarkName="cifarnet"),
   )
 })
 
 class ALEXNETAcceleratorConfig extends Config((site, here, up) => {
   case AcceleratorKey => up(AcceleratorKey, site).copy(
-    lsh  = LSHParams(maxHashSize = 16, maxVectorDim = 24, numOfHashTables = 1, maxNumOfInputs = 291600, dataSize = 8, countSize = 32, fpuEnabled = false),
+    lsh  = LSHParams(maxHashSize = 20, maxVectorDim = 24, benchmarkName="alexnet"),
   )
 })
 
 class VGGNETAcceleratorConfig extends Config((site, here, up) => {
   case AcceleratorKey => up(AcceleratorKey, site).copy(
-    lsh  = LSHParams(maxHashSize = 20, maxVectorDim = 18, numOfHashTables = 1, maxNumOfInputs = 802816, dataSize = 8, countSize = 32, fpuEnabled = false),
+    lsh  = LSHParams(maxHashSize = 20, maxVectorDim = 24, benchmarkName="vggnet"),
   )
 })
 
 class MOBILENETAcceleratorConfig extends Config((site, here, up) => {
   case AcceleratorKey => up(AcceleratorKey, site).copy(
-    lsh  = LSHParams(maxHashSize = 18, maxVectorDim = 16, numOfHashTables = 1, maxNumOfInputs = 50176, dataSize = 8, countSize = 32, fpuEnabled = false),
+    lsh  = LSHParams(maxHashSize = 20, maxVectorDim = 24, benchmarkName="mobilenet"),
   )
 })
 

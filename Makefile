@@ -48,6 +48,8 @@ EXTRA_FIRRTL_ARGS = --infer-rw $(MODEL) --repl-seq-mem -c:$(MODEL):-o:$(BUILD_DI
 
 # to convert conf file to srams
 VLSI_MEM_GEN ?= $(base_dir)/rocket-chip/scripts/vlsi_mem_gen
+VLSI_ROM_GEN ?= $(base_dir)/rocket-chip/scripts/vlsi_rom_gen
+bin ?= $(base_dir)/sw/cifarnet/int8/LSH_layer0_subvector0.bin
 
 $(FIRRTL_JAR): $(shell find $(rocketchip_dir)/firrtl/src/main/scala -iname "*.scala") 
 	$(MAKE) -C $(rocketchip_dir)/firrtl SBT="$(SBT)" root_dir=$(rocketchip_dir)/firrtl build-scala
@@ -72,14 +74,21 @@ verilog := $(BUILD_DIR)/$(long_name).v $(BUILD_DIR)/$(long_name).conf
 $(verilog): $(firrtl) $(FIRRTL_JAR)
 	$(FIRRTL) -i $< -o $@ -X verilog $(EXTRA_FIRRTL_ARGS)
 
-
 .PHONY: verilog
 verilog: $(verilog)
 
 
+romgen := $(BUILD_DIR)/$(long_name).rom.v
+$(romgen): $(verilog)
+	$(VLSI_ROM_GEN) $(BUILD_DIR)/$(long_name).rom.conf $(bin) > $@
+
+.PHONY: romgen
+verilog: $(romgen)
+
+
 # Build sram models
 sram := $(BUILD_DIR)/$(long_name).behav_srams.v
-$(sram) : $(verilog)
+$(sram) : $(romgen)
 	cd $(generated_dir) && \
 	$(VLSI_MEM_GEN) $(BUILD_DIR)/$(long_name).conf > $@.tmp && \
 	mv -f $@.tmp $@

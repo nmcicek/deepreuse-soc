@@ -1,3 +1,5 @@
 target/
 builds/
 lib/
+verisim/verilator/src
+verisim/verilator/install/

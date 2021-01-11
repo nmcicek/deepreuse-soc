@@ -1,8 +1,9 @@
 package FPGA
 
-import Chisel._
-import chisel3.util.HasBlackBoxInline
-import chisel3.dontTouch
+import chisel3._
+import chisel3.util.experimental._
+import chisel3.util._
+import firrtl.annotations._
 
 import freechips.rocketchip.config.Parameters
 import freechips.rocketchip.diplomacy._
@@ -15,6 +16,9 @@ import deepreuse.lsh._
 import deepreuse.common._
 import deepreuse.wrapper._
 import deepreuse.memory._
+
+import java.nio.{ByteBuffer, ByteOrder}
+import java.nio.file.{Files, Paths}
 
 
 class LSHWrapper(implicit p:Parameters) extends BaseWrapper
@@ -31,11 +35,10 @@ class LSHWrapperModule(outer: LSHWrapper) extends BaseWrapperModule(outer)
   if(p(SimEnabled)){
     val lshRom = Module(new LSHROM)
     
-    val cycle = Reg(init = UInt(0,32)) // independent cycle counter
-    cycle := cycle + 1.U
+    val cycle = RegInit(0.U(32.W)) // independent cycle counter
+    cycle := cycle + 1.U(32.W)
     
     val readEn = lshModule.io.sram_req_uops.valid && lshModule.io.resetDone 
-    lshRom.io.clock := clock
     lshRom.io.me := readEn
     lshRom.io.address := lshModule.io.sram_req_uops.bits.address
     lshModule.io.sram_resp_uops.data := lshRom.io.q
@@ -56,27 +59,17 @@ class LSHWrapperModule(outer: LSHWrapper) extends BaseWrapperModule(outer)
   }
 }
 
-class LSHROM(implicit p: Parameters) extends ParameterizedBlackBox()(p) with HasBlackBoxInline{
+class LSHROM(implicit p: Parameters) extends AcceleratorModule 
+{
 
   val subvector_num = p(AcceleratorKey).layer.subVectorNum
   val layer_num = p(AcceleratorKey).layer.layerNum
 
   val io = IO(new Bundle {
-    val clock                = Input(Clock())
     val address              = Input(UInt(sramRowAddr.W))
     val me                   = Input(Bool())
     val q                    = Output(UInt(sramRowData.W))
   })
-
-  io.suggestName("LSHROMIO") 
-
-  val benchmark = 
-    maxNumOfInputs match {
-      case 102400 => "cifarnet"
-      case 291600 => "alexnet"
-      case 802816 => "vggnet"
-      case 50176 => "mobilenet"
-    }
 
   val data_type = 
     dataSize match {
@@ -85,31 +78,12 @@ class LSHROM(implicit p: Parameters) extends ParameterizedBlackBox()(p) with Has
     }    
 
   val base_dir = System.getProperty("user.dir")
+  val contentFileName = base_dir ++"/sw/bin/"++ benchmarkName ++"/"++ data_type ++"/LSH_layer"++ layer_num.toString ++"_subvector"++ subvector_num.toString ++".bin" 
+  println(contentFileName)
 
-  setInline("../../deepreuse/src/main/resources/vsrc/LSHROM.v",
-    s"""
-module LSHROM(
-  input clock,
-  input me,
-  input ["""++ (sramRowAddr-1).toString ++""":0] address,
-  output ["""++ (sramRowData-1).toString ++""":0] q
-);
-  reg ["""++ (sramRowData-1).toString ++""":0] out;
-  reg ["""++ (sramRowData-1).toString ++""":0] rom [0: """++ (math.pow(2,sramRowAddr)-1).toString ++"""];
-  initial begin: init_and_load
-    integer i;
-    // 256 is the maximum length of $readmemh filename supported by Verilator
-    reg [255*8-1:0] path;
-    path = """"++ base_dir ++"""/../deepreuse-sw/bin/"""++ benchmark ++"""/"""++ data_type ++"""/LSH_layer"""++ layer_num.toString ++"""_subvector""" ++ subvector_num.toString ++ """.bin";
-    $readmemb(path, rom);
-  end : init_and_load
-  always @(posedge clock) begin
-    if (me) begin
-      out <= rom[address];
-    end
-  end
-  assign q = out;
-endmodule
-    """.stripMargin)
-
+  val rom = ROMGenerator(ROMConfig("TestROM", math.pow(2,sramRowAddr).toInt, sramRowData))
+  rom.io.clock := clock
+  rom.io.address := io.address
+  rom.io.me := io.me
+  io.q := rom.io.q
 }

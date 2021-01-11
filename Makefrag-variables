@@ -9,8 +9,8 @@ VSRCS := \
 sim_vsrcs = \
 	$(BUILD_DIR)/$(long_name).v \
 	$(BUILD_DIR)/$(long_name).behav_srams.v \
+	$(BUILD_DIR)/$(long_name).rom.v \
 	$(base_dir)/deepreuse/src/main/resources/vsrc/SimDRAM.v \
-	$(base_dir)/deepreuse/src/main/resources/vsrc/LSHROM.v \
 	$(base_dir)/deepreuse/src/main/resources/vsrc/plusarg_reader.v \
 	#$(base_dir)/deepreuse/src/main/resources/vsrc/SimFPUAdd.v \
 	#$(base_dir)/deepreuse/src/main/resources/vsrc/SimFPUDiv.v \
