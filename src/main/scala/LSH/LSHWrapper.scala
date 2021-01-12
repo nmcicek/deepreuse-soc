@@ -40,7 +40,7 @@ class LSHWrapperModule(outer: LSHWrapper) extends BaseWrapperModule(outer)
     
     val readEn = lshModule.io.sram_req_uops.valid && lshModule.io.resetDone 
     lshRom.io.me := readEn
-    lshRom.io.address := lshModule.io.sram_req_uops.bits.address
+    lshRom.io.address := lshModule.io.sram_req_uops.bits.address >> logSramRowWord.U
     lshModule.io.sram_resp_uops.data := lshRom.io.q
     
     // reconfiguration
@@ -50,9 +50,11 @@ class LSHWrapperModule(outer: LSHWrapper) extends BaseWrapperModule(outer)
     lshIO.resetDone         := lshModule.io.resetDone
     lshIO.success           := lshModule.io.sram_req_uops.bits.done 
     if(DEBUG_PRINTF_LSH){
-      printf("\n---LSH WRAPPER---\n")
-      printf("reset:%d resetDone: %d success: %d readEn: %d address: 0x%x valid: %d resp:0x%x busy: %d\n",
-              reset.asBool, lshIO.resetDone, lshIO.success, readEn, lshRom.io.address, lshModule.io.sram_req_uops.valid, lshModule.io.sram_resp_uops.data, lshModule.io.sram_req_uops.bits.busy)
+      when(lshIO.resetDone){
+        printf("\n---LSH WRAPPER---\n")
+        printf("reset:%d resetDone: %d success: %d readEn: %d address: 0x%x valid: %d resp:0x%x busy: %d\n",
+                reset.asBool, lshIO.resetDone, lshIO.success, readEn, lshRom.io.address, lshModule.io.sram_req_uops.valid, lshModule.io.sram_resp_uops.data, lshModule.io.sram_req_uops.bits.busy)
+      }
     }    
   }else{
     lshModule.io.conf.get := ???
@@ -85,5 +87,6 @@ class LSHROM(implicit p: Parameters) extends AcceleratorModule
   rom.io.clock := clock
   rom.io.address := io.address
   rom.io.me := io.me
+  rom.io.oe := true.B
   io.q := rom.io.q
 }
