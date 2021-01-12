@@ -51,8 +51,8 @@ class LSHWrapperModule(outer: LSHWrapper) extends BaseWrapperModule(outer)
     lshIO.success           := lshModule.io.sram_req_uops.bits.done 
     if(DEBUG_PRINTF_LSH){
       printf("\n---LSH WRAPPER---\n")
-      printf("resetDone: %d success: %d readEn: %d address: 0x%x valid: %d busy: %d\n",
-              lshIO.resetDone, lshIO.success, readEn, lshRom.io.address, lshModule.io.sram_req_uops.valid, lshModule.io.sram_req_uops.bits.busy)
+      printf("reset:%d resetDone: %d success: %d readEn: %d address: 0x%x valid: %d resp:0x%x busy: %d\n",
+              reset.asBool, lshIO.resetDone, lshIO.success, readEn, lshRom.io.address, lshModule.io.sram_req_uops.valid, lshModule.io.sram_resp_uops.data, lshModule.io.sram_req_uops.bits.busy)
     }    
   }else{
     lshModule.io.conf.get := ???
@@ -78,7 +78,7 @@ class LSHROM(implicit p: Parameters) extends AcceleratorModule
     }    
 
   val base_dir = System.getProperty("user.dir")
-  val contentFileName = base_dir ++"/sw/bin/"++ benchmarkName ++"/"++ data_type ++"/LSH_layer"++ layer_num.toString ++"_subvector"++ subvector_num.toString ++".bin" 
+  val contentFileName = base_dir ++"/sw"++"/bin"++"/"++ benchmarkName ++"/"++ data_type ++"/LSH_layer"++ layer_num.toString ++"_subvector"++ subvector_num.toString ++".bin" 
   println(contentFileName)
 
   val rom = ROMGenerator(ROMConfig("TestROM", math.pow(2,sramRowAddr).toInt, sramRowData))
