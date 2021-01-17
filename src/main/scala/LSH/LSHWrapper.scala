@@ -48,7 +48,7 @@ class LSHWrapperModule(outer: LSHWrapper) extends BaseWrapperModule(outer)
     
     // finish
     lshIO.resetDone         := lshModule.io.resetDone
-    lshIO.success           := lshModule.io.sram_req_uops.bits.done 
+    lshIO.success           := lshModule.io.sram_req_uops.bits.done && lshModule.io.success
     if(DEBUG_PRINTF_LSH){
       when(lshIO.resetDone){
         printf("\n---LSH WRAPPER---\n")
