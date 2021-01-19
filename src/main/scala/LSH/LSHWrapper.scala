@@ -80,7 +80,7 @@ class LSHROM(implicit p: Parameters) extends AcceleratorModule
     }    
 
   val base_dir = System.getProperty("user.dir")
-  val contentFileName = base_dir ++"/sw"++"/bin"++"/"++ benchmarkName ++"/"++ data_type ++"/LSH_layer"++ layer_num.toString ++"_subvector"++ subvector_num.toString ++".bin" 
+  val contentFileName = base_dir ++"/sw"++"/"++ benchmarkName ++"/bin"++"/"++ data_type ++"/LSH_layer"++ layer_num.toString ++"_subvector"++ subvector_num.toString ++".bin" 
   println(contentFileName)
 
   val rom = ROMGenerator(ROMConfig("TestROM", math.pow(2,sramRowAddr).toInt, sramRowData))
