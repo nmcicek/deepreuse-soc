@@ -50,6 +50,7 @@ EXTRA_FIRRTL_ARGS = --infer-rw $(MODEL) --repl-seq-mem -c:$(MODEL):-o:$(BUILD_DI
 VLSI_MEM_GEN ?= $(base_dir)/rocket-chip/scripts/vlsi_mem_gen
 VLSI_ROM_GEN ?= $(base_dir)/rocket-chip/scripts/vlsi_rom_gen
 bin ?= $(base_dir)/sw/bin/cifarnet/int8/LSH_layer0_subvector0.bin
+trace ?=
 
 $(FIRRTL_JAR): $(shell find $(rocketchip_dir)/firrtl/src/main/scala -iname "*.scala") 
 	$(MAKE) -C $(rocketchip_dir)/firrtl SBT="$(SBT)" root_dir=$(rocketchip_dir)/firrtl build-scala
@@ -134,7 +135,7 @@ sim_csrcs += $(base_dir)/deepreuse/src/main/resources/csrc/LSHUInt8Emulator.cc
 $(model_mk): $(sim_vsrcs) $(dramsim_lib) $(INSTALLED_VERILATOR)
 	rm -rf $(BUILD_DIR)/$(long_name)
 	mkdir -p $(BUILD_DIR)/$(long_name)
-	$(VERILATOR) $(VERILATOR_FLAGS) -Mdir $(BUILD_DIR)/$(long_name) \
+	$(VERILATOR) $(trace) $(VERILATOR_FLAGS) -Mdir $(BUILD_DIR)/$(long_name) \
 	-o $(sim) $< $(sim_csrcs) -LDFLAGS "$(LDFLAGS)" \
 	-CFLAGS "-I$(BUILD_DIR) -include $(model_header)"
 	touch $@
