@@ -19,9 +19,9 @@ class DefaultAcceleratorConfig extends Config((site, here, up) => {
   case XLen => 64
   case AcceleratorKey => AcceleratorParams(
     frequency = BigInt(50000000),
-    lsh  = LSHParams(maxHashSize = 20, maxVectorDim = 24, numOfHashTables = 1, maxNumOfInputs = 102400, dataSize = 8, countSize = 8, fpuEnabled = false),
+    lsh = LSHParams(numOfHashTables = 1, maxHashSize = 20, maxVectorDim = 24, nFans = 16, fanSize = 16, sramRowData = 128),
     fpu  = FPUParams(dataSize = 8, integerToFloatLatency = 5, mulAddLatency = 5, lshMulLatency = 8, lshAddLatency = 11, divLatency = 28),
-    layer = LayerParams(layerHashSize = 15, layerVectorDim = 5, layerBatchSize = 100, layerNumOfInputs = 1024, layerNumOfSubVectors = 15, layerNum = 0, subVectorNum = 0)
+    layer = LayerParams(layerHashSize = 15, layerVectorDim = 20, layerBatchSize = 100, layerNumOfInputs = 676, layerNumOfSubVectors = 80, layerNum = 1, subVectorNum = 0)
   )
   case PeripheryUARTKey => UARTParams(
     address = BigInt(0x10000000), 
