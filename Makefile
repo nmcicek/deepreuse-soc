@@ -35,11 +35,13 @@ include $(base_dir)/verisim/Makefrag-verilator
 
 
 $(BUILD_DIR)/dramsim2_ini: $(dramsim_dir)/system.ini.example
+	mkdir -p $(BUILD_DIR)
 	ln -sf $< $@
 
 # Set SBT
 SBT ?= java -jar $(base_dir)/rocket-chip/sbt-launch.jar ++2.12.10 
 export rocketchip_dir := $(base_dir)/rocket-chip
+export sw_dir := $(base_dir)/sw
 
 # Build firrtl.jar and put it where chisel3 can find it.
 FIRRTL_JAR ?= $(base_dir)/rocket-chip/firrtl/utils/bin/firrtl.jar
@@ -121,7 +123,6 @@ $(mcs): $(bit)
 
 .PHONY: mcs
 mcs: $(mcs)
-
 
 
 # Build simulator
