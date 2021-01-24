@@ -54,47 +54,50 @@ for i in "${!layerHashSizes[@]}"
 do	
 	for ((j=0; j<${layerNumOfSubVectors[i]}; j++))
 	do				
-		layerTotalLines="${layerNumOfInputs[i]}*${layerVectorDim[i]}*${layerBatchSize[i]}/${sramRowWord}"
-		echo "*********************************"
-		echo "*** Layer Specific Parameters ***"
-		echo "Layer Hash Size: "${layerHashSizes[i]}
-		echo "Layer Vector Dimension: "${layerVectorDim[i]}
-		echo "Layer Number: "${i}
-		echo "Layer SubVector: "${j}
-		echo "Layer Total Lines: "${layerTotalLines}
-		echo "*********************************"
-		sed -i "s/layer =.*/layer = LayerParams(layerHashSize = ${layerHashSizes[i]}, layerVectorDim = ${layerVectorDim[i]}, layerBatchSize = ${layerBatchSize[i]}, layerNumOfInputs = ${layerNumOfInputs[i]}, layerNumOfSubVectors = ${layerNumOfSubVectors[i]}, layerNum = ${i}, subVectorNum = ${j})/g" src/main/scala/FPGA/Config.scala
-		sed -i "s/lsh  = LSHParams(numOfHashTables.*/lsh = LSHParams(numOfHashTables = 1, maxHashSize = ${maxHashSize}, maxVectorDim = ${maxVectorDim}, nFans = ${nFans}, fanSize = ${fanSize}, sramRowData = ${sramRowData}),/g" src/main/scala/FPGA/Config.scala
-
-		OtherInputs="\ \ int hashSize = ${layerHashSizes[i]};\n"
-		OtherInputs="${OtherInputs}\ \ int vectorDim = ${layerVectorDim[i]};\n"
-		OtherInputs="${OtherInputs}\ \ int sramRowWord = ${sramRowWord};\n"
-		OtherInputs="${OtherInputs}\ \ int totalLines = ${layerTotalLines};"
+		if [ ${i} -gt 0 ]
+		then		
+			layerTotalLines="${layerNumOfInputs[i]}*${layerVectorDim[i]}*${layerBatchSize[i]}/${sramRowWord}"
+			echo "*********************************"
+			echo "*** Layer Specific Parameters ***"
+			echo "Layer Hash Size: "${layerHashSizes[i]}
+			echo "Layer Vector Dimension: "${layerVectorDim[i]}
+			echo "Layer Number: "${i}
+			echo "Layer SubVector: "${j}
+			echo "Layer Total Lines: "${layerTotalLines}
+			echo "*********************************"
+			sed -i "s/layer =.*/layer = LayerParams(layerHashSize = ${layerHashSizes[i]}, layerVectorDim = ${layerVectorDim[i]}, layerBatchSize = ${layerBatchSize[i]}, layerNumOfInputs = ${layerNumOfInputs[i]}, layerNumOfSubVectors = ${layerNumOfSubVectors[i]}, layerNum = ${i}, subVectorNum = ${j})/g" src/main/scala/FPGA/Config.scala
+			sed -i "s/lsh  = LSHParams(numOfHashTables.*/lsh = LSHParams(numOfHashTables = 1, maxHashSize = ${maxHashSize}, maxVectorDim = ${maxVectorDim}, nFans = ${nFans}, fanSize = ${fanSize}, sramRowData = ${sramRowData}),/g" src/main/scala/FPGA/Config.scala
 	
-		sed -i '/^  int hashSize/d' deepreuse/src/main/resources/csrc/LSHUInt8Emulator.cc
-		sed -i '/^  int vectorDim/d' deepreuse/src/main/resources/csrc/LSHUInt8Emulator.cc
-		sed -i '/^  int sramRowWord/d' deepreuse/src/main/resources/csrc/LSHUInt8Emulator.cc
-		sed -i '/^  int totalLines/d' deepreuse/src/main/resources/csrc/LSHUInt8Emulator.cc
-		sed -i "/\/\/ other inputs/a ${OtherInputs}" deepreuse/src/main/resources/csrc/LSHUInt8Emulator.cc
+			OtherInputs="\ \ int hashSize = ${layerHashSizes[i]};\n"
+			OtherInputs="${OtherInputs}\ \ int vectorDim = ${layerVectorDim[i]};\n"
+			OtherInputs="${OtherInputs}\ \ int sramRowWord = ${sramRowWord};\n"
+			OtherInputs="${OtherInputs}\ \ int totalLines = ${layerTotalLines};"
+		
+			sed -i '/^  int hashSize/d' deepreuse/src/main/resources/csrc/LSHUInt8Emulator.cc
+			sed -i '/^  int vectorDim/d' deepreuse/src/main/resources/csrc/LSHUInt8Emulator.cc
+			sed -i '/^  int sramRowWord/d' deepreuse/src/main/resources/csrc/LSHUInt8Emulator.cc
+			sed -i '/^  int totalLines/d' deepreuse/src/main/resources/csrc/LSHUInt8Emulator.cc
+			sed -i "/\/\/ other inputs/a ${OtherInputs}" deepreuse/src/main/resources/csrc/LSHUInt8Emulator.cc
+		
+			bin=${PWD}/sw/${benchmarkName}/bin/int8/LSH_layer${i}_subvector${j}.bin
+			make clean sim CONFIG="$1"LSH"$2"SimConfig bin=$bin trace="$3" -j20
+		
+			mkdir -p outputs
+			file_name=$1_$2_layer${i}_subvector${j}
+			cd builds/lsh-accelerator/ && ./simulator-FPGA-FPGAChip 2> ../../outputs/${file_name}.log && cd ../../
+		
+			grepped_value="$(grep -rni "completed" outputs/${file_name}.log)"
+			IFS=' ' read -r -a array <<< "$grepped_value"
 	
-		bin=${PWD}/sw/${benchmarkName}/bin/int8/LSH_layer${i}_subvector${j}.bin
-		make clean sim CONFIG="$1"LSH"$2"SimConfig bin=$bin trace="$3" -j20
-	
-		mkdir -p outputs
-		file_name=$1_$2_layer${i}_subvector${j}
-		cd builds/lsh-accelerator/ && ./simulator-FPGA-FPGAChip 2> ../../outputs/${file_name}.log && cd ../../
-	
-		grepped_value="$(grep -rni "completed" outputs/${file_name}.log)"
-		IFS=' ' read -r -a array <<< "$grepped_value"
-
-		echo "*********************************" >> outputs/$1_$2.out
-		echo "*** Layer Specific Parameters ***" >> outputs/$1_$2.out
-		echo "Layer Hash Size: "${layerHashSizes[i]} >> outputs/$1_$2.out
-		echo "Layer Vector Dimension: "${layerVectorDim[i]} >> outputs/$1_$2.out
-		echo "Layer Number: "${i} >> outputs/$1_$2.out
-		echo "Layer SubVector: "${j} >> outputs/$1_$2.out
-		echo "Layer Total Lines: "${layerTotalLines} >> outputs/$1_$2.out
-		echo "*********************************" >> outputs/$1_$2.out
-		echo layer_num: ${i} subvector: ${j} cycle: ${grepped_value} >> outputs/$1_$2.out
+			echo "*********************************" >> outputs/$1_$2.out
+			echo "*** Layer Specific Parameters ***" >> outputs/$1_$2.out
+			echo "Layer Hash Size: "${layerHashSizes[i]} >> outputs/$1_$2.out
+			echo "Layer Vector Dimension: "${layerVectorDim[i]} >> outputs/$1_$2.out
+			echo "Layer Number: "${i} >> outputs/$1_$2.out
+			echo "Layer SubVector: "${j} >> outputs/$1_$2.out
+			echo "Layer Total Lines: "${layerTotalLines} >> outputs/$1_$2.out
+			echo "*********************************" >> outputs/$1_$2.out
+			echo layer_num: ${i} subvector: ${j} cycle: ${grepped_value} >> outputs/$1_$2.out
+		fi
 	done
 done
