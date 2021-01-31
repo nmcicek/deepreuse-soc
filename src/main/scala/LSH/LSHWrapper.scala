@@ -45,6 +45,7 @@ class LSHWrapperModule(outer: LSHWrapper) extends BaseWrapperModule(outer)
     
     // reconfiguration
     lshModule.io.conf.get   := lshIO.conf.get
+    lshIO.conf_out.get      := lshModule.io.conf_out.get
     
     // finish
     lshIO.resetDone         := lshModule.io.resetDone
